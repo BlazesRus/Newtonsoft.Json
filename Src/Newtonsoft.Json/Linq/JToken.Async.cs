@@ -134,6 +134,20 @@ namespace Newtonsoft.Json.Linq
                     v = JValue.CreateUndefined();
                     v.SetLineInfo(lineInfo, settings);
                     return v;
+                case JsonToken.SmallDec:
+                case JsonToken.Dynamic:
+                case JsonToken.PercentValV2:
+                    try
+                    {
+                        v = new JValue(reader.Value);
+                        v.SetLineInfo(lineInfo, settings);
+                        return v;
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception called from JToken.Async->ReadContentFromAsync of type " + ex.ToString());
+                        throw;
+                    }
                 default:
                     throw JsonReaderException.Create(reader, "Error reading JToken from JsonReader. Unexpected token: {0}".FormatWith(CultureInfo.InvariantCulture, reader.TokenType));
             }

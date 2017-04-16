@@ -27,6 +27,9 @@ using System;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Globalization;
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 #if HAVE_BIG_INTEGER
 using System.Numerics;
 #endif
@@ -46,7 +49,10 @@ namespace Newtonsoft.Json
         ReadAsDateTimeOffset,
 #endif
         ReadAsDouble,
-        ReadAsBoolean
+        ReadAsBoolean,
+        ReadAsSmallDec,
+        ReadAsDynamic,
+        ReadAsPercentValV2
     }
 
     /// <summary>
@@ -179,6 +185,15 @@ namespace Newtonsoft.Json
                 case ReadType.ReadAsDecimal:
                 case ReadType.ReadAsBoolean:
                     // caller will convert result
+                    break;
+                case ReadType.ReadAsSmallDec:
+                    //SetToken(JsonToken.SmallDec, (SmallDec)_stringReference.ToString(), false);
+                    break;
+                case ReadType.ReadAsDynamic:
+                //    SetToken(JsonToken.Dynamic, (dynamic)_stringReference.ToString(), false);
+                    break;
+                case ReadType.ReadAsPercentValV2:
+                    //SetToken(JsonToken.PercentValV2, (PercentValV2)_stringReference.ToString(), false);
                     break;
                 default:
                     if (_dateParseHandling != DateParseHandling.None)
@@ -1905,7 +1920,7 @@ namespace Newtonsoft.Json
         }
 
         private void ParseReadNumber(ReadType readType, char firstChar, int initialPosition)
-        { 
+        {
             // set state to PostValue now so that if there is an error parsing the number then the reader can continue
             SetPostValueState(true);
 
@@ -2073,6 +2088,26 @@ namespace Newtonsoft.Json
 
                 numberType = JsonToken.Float;
             }
+            //else if (readType == ReadType.ReadAsSmallDec)
+            //{
+            //    try
+            //    {
+            //        Type SmallDecType = Type.GetType("SmallDec",false);
+            //        typeof(SmallDecType) Value = _stringReference.ToString();
+            //        numberValue = Value;
+            //        numberType = JsonToken.SmallDec;
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        throw;
+            //    }
+            //}
+            //else if (readType == ReadType.ReadAsPercentValV2)
+            //{
+            //    PercentValV2 Value = (PercentValV2) _stringReference.ToString();
+            //    numberValue = Value;
+            //    numberType = JsonToken.PercentValV2;
+            //}
             else
             {
                 if (singleDigit)

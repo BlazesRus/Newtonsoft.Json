@@ -859,6 +859,22 @@ namespace Newtonsoft.Json.Linq
                         }
                         parent = property;
                         break;
+                    case JsonToken.SmallDec:
+                    case JsonToken.Dynamic:
+                    case JsonToken.PercentValV2:
+                        try
+                        {
+                            v = new JValue(r.Value);
+                            v.SetLineInfo(lineInfo, settings);
+                            parent.Add(v);
+                            break;
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine("Exception called from JContainer->ReadContentFrom of type " + ex.ToString());
+                            throw;
+                        }
+                        throw new InvalidOperationException("The JsonReader should not be on a token of type {0}.".FormatWith(CultureInfo.InvariantCulture, r.TokenType));
                     default:
                         throw new InvalidOperationException("The JsonReader should not be on a token of type {0}.".FormatWith(CultureInfo.InvariantCulture, r.TokenType));
                 }

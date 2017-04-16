@@ -31,6 +31,7 @@ using System.Globalization;
 #if HAVE_DYNAMIC
 using System.Dynamic;
 using System.Linq.Expressions;
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 #if HAVE_BIG_INTEGER
 using System.Numerics;
@@ -390,6 +391,16 @@ namespace Newtonsoft.Json.Linq
                     TimeSpan ts2 = (TimeSpan)objB;
 
                     return ts1.CompareTo(ts2);
+                case JTokenType.SmallDec:
+#if(JSON_SharedGlobalCode)
+                    SmallDec Value01 = (SmallDec) objA;
+                    SmallDec Value02 = (SmallDec)objB;
+                    return Value01.CompareTo(Value02);
+#else
+                    SmallDec Value01 = (SmallDec) objA;
+                    SmallDec Value02 = (SmallDec)objB;
+                    return Value01.CompareTo(Value02);
+#endif
                 default:
                     throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(valueType), valueType, "Unexpected value type: {0}".FormatWith(CultureInfo.InvariantCulture, valueType));
             }

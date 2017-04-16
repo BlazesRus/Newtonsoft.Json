@@ -34,6 +34,9 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 #if !HAVE_LINQ
 using Newtonsoft.Json.Utilities.LinqBridge;
 #endif
@@ -87,7 +90,8 @@ namespace Newtonsoft.Json.Utilities
         Uri = 38,
         String = 39,
         Bytes = 40,
-        DBNull = 41
+        DBNull = 41,
+        SmallDec = 42
     }
 
     internal class TypeInformation
@@ -152,6 +156,11 @@ namespace Newtonsoft.Json.Utilities
                 { typeof(Uri), PrimitiveTypeCode.Uri },
                 { typeof(string), PrimitiveTypeCode.String },
                 { typeof(byte[]), PrimitiveTypeCode.Bytes },
+#if (JSON_SharedGlobalCode)
+                { typeof(SmallDec), PrimitiveTypeCode.SmallDec },
+#else
+                { typeof(SmallDec), PrimitiveTypeCode.SmallDec },
+#endif
 #if HAVE_ADO_NET
                 { typeof(DBNull), PrimitiveTypeCode.DBNull }
 #endif

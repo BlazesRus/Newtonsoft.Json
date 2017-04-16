@@ -44,7 +44,9 @@ using Newtonsoft.Json.Utilities;
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
-
+#endif
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
 namespace Newtonsoft.Json.Serialization
@@ -335,6 +337,18 @@ namespace Newtonsoft.Json.Serialization
                     case JsonToken.Comment:
                         // ignore
                         break;
+                    case JsonToken.SmallDec:
+                    case JsonToken.Dynamic:
+                    case JsonToken.PercentValV2:
+                        try
+                        {
+                            return EnsureGlobalCodeType(reader, reader.Value, CultureInfo.InvariantCulture, contract, objectType, reader.TokenType);
+                        }
+                        catch (Exception ex)
+                        {
+                            System.Console.WriteLine("Exception called from JsonSerializerInternalReader->CreateValueInternal of type " + ex.ToString());
+                            throw;
+                        }
                     default:
                         throw JsonSerializationException.Create(reader, "Unexpected token while deserializing object: " + reader.TokenType);
                 }
@@ -975,7 +989,6 @@ namespace Newtonsoft.Json.Serialization
                             return ConvertUtils.FromBigInteger((BigInteger)value, contract.NonNullableUnderlyingType);
                         }
 #endif
-
                         // this won't work when converting to a custom IConvertible
                         return Convert.ChangeType(value, contract.NonNullableUnderlyingType, culture);
                     }
@@ -989,6 +1002,61 @@ namespace Newtonsoft.Json.Serialization
             }
 
             return value;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="value"></param>
+        /// <param name="culture"></param>
+        /// <param name="contract"></param>
+        /// <param name="targetType"></param>
+        /// <param name="TokenType"></param>
+        /// <returns></returns>
+        private static object EnsureGlobalCodeType(JsonReader reader, object value, CultureInfo culture, JsonContract contract, Type targetType, JsonToken TokenType = JsonToken.SmallDec)
+        {
+            if (targetType == null)
+            {
+                return value;
+            }
+            Type valueType = ReflectionUtils.GetObjectType(value);
+            string TargetTypeName = targetType.ToString();
+            string ValueTypeName = valueType.ToString();
+            try
+            {
+                if (valueType == targetType)
+                {
+                    return value;
+                }
+                else
+                {
+                    switch (TokenType)
+                    {
+                        case JsonToken.SmallDec:
+                        {
+                                if (ValueTypeName == "SmallDec")
+                                {
+                                    return (SmallDec)value;
+                                }
+                                else
+                                {
+                                    dynamic changedObj = Convert.ChangeType(value, targetType, culture);
+                                    return changedObj;
+                                }
+                        }
+                        default:
+                            {
+                                return ConvertUtils.ConvertOrCast(value, culture, contract.NonNullableUnderlyingType);
+                            }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Console.WriteLine("Exception called from EnsureGlobalCodeType of type " + ex.ToString() + " with TokenType " + TokenType.ToString() + " with conversion from " + ValueTypeName+" to "+TargetTypeName);
+                throw JsonSerializationException.Create(reader, "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.FormatValueForPrint(value), targetType), ex);
+            }
         }
 
         private bool SetPropertyValue(JsonProperty property, JsonConverter propertyConverter, JsonContainerContract containerContract, JsonProperty containerProperty, JsonReader reader, object target)
@@ -2264,6 +2332,17 @@ namespace Newtonsoft.Json.Serialization
                     reader.ReadAsDateTimeOffset();
                     break;
 #endif
+                case ReadType.ReadAsSmallDec:
+                    try
+                    {
+                        reader.ReadAsSmallDec();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception called from JContainer->ReadContentFrom of type " + ex.ToString());
+                        throw;
+                    }
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

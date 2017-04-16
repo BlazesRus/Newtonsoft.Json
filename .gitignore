@@ -17,3 +17,6 @@ _ReSharper.*
 *.nuget.targets
 *.orig
 .DS_Store
+**/Newtonsoft.JsonOld/*
+*.dll
+*.dll.*

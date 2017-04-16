@@ -37,6 +37,9 @@ using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 #endif
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json
 {
@@ -1190,6 +1193,77 @@ namespace Newtonsoft.Json
             } while (t == JsonToken.Comment);
 
             return t;
+        }
+
+        /// <summary>
+        /// Reads the next JSON token from the source as a <see cref="SmallDec"/>.
+        /// </summary>
+        /// <returns>A <see cref="SmallDec"/>. This method will return <c>null</c> at the end of an array.</returns>
+        [CLSCompliant(false)]
+        public virtual
+#if (JSON_SharedGlobalCode)
+        SmallDec
+#else
+        dynamic
+#endif
+        ReadAsSmallDec()
+        {
+            JsonToken t = GetContentToken();
+#if (JSON_SharedGlobalCode)
+            switch (t)
+            {
+                case JsonToken.None:
+                case JsonToken.Null:
+                case JsonToken.EndArray:
+                    return SmallDec.NaN;
+                case JsonToken.String:
+                    return Value.ToString();
+                case JsonToken.SmallDec:
+                    return (SmallDec)Value;
+                case JsonToken.Integer:
+                    return (long)Value;
+                case JsonToken.Float:
+                    return (double)Value;
+                case JsonToken.Boolean:
+                    return (SmallDec)(bool)Value;
+            }
+#else
+        Type SmallDecType = Type.GetType("SmallDec", true);
+        //dynamic changedObj = Convert.ChangeType(Value, SmallDecType);
+            switch (t)
+            {
+                case JsonToken.None:
+                case JsonToken.Null:
+                case JsonToken.EndArray:
+                    dynamic changedObj = Convert.ChangeType(Value, SmallDecType);
+                    return changedObj.NaN;
+                case JsonToken.String:
+                    return Convert.ChangeType(ToString);
+                case JsonToken.SmallDec:
+                    return Convert.ChangeType(Value, SmallDecType);
+            }
+#endif
+            if (JsonTokenUtils.IsPrimitiveToken(t))
+            {
+                if (Value != null)
+                {
+                    string s;
+                    IFormattable formattable = Value as IFormattable;
+                    if (formattable != null)
+                    {
+                        s = formattable.ToString(null, Culture);
+                    }
+                    else
+                    {
+                        Uri uri = Value as Uri;
+                        s = uri != null ? uri.OriginalString : Value.ToString();
+                    }
+
+                    SetToken(JsonToken.SmallDec, (SmallDec)s, false);
+                    return s;
+                }
+            }
+            throw JsonReaderException.Create(this, "Error reading SmallDec. Unexpected token: {0}.".ToString());
         }
     }
 }

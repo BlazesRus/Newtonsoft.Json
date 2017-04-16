@@ -37,7 +37,9 @@ using Newtonsoft.Json.Serialization;
 using System.Text;
 #if HAVE_XLINQ
 using System.Xml.Linq;
-
+#endif
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
 namespace Newtonsoft.Json
@@ -447,6 +449,19 @@ namespace Newtonsoft.Json
             return JavaScriptUtils.ToEscapedJavaScriptString(value, delimiter, true, stringEscapeHandling);
         }
 
+#if (JSON_SharedGlobalCode)
+        /// <summary>
+        /// Converts the <see cref="SmallDec"/> to its JSON string representation.
+        /// </summary>
+        /// <param name="value">The value to convert.</param>
+        /// <returns>A JSON string representation of the <see cref="SmallDec"/>.</returns>
+        [CLSCompliant(false)]
+        public static string ToString(SmallDec value)
+        {
+            return value.ToString();
+        }
+#endif
+
         /// <summary>
         /// Converts the <see cref="Object"/> to its JSON string representation.
         /// </summary>
@@ -511,12 +526,29 @@ namespace Newtonsoft.Json
                 case PrimitiveTypeCode.BigInteger:
                     return ToStringInternal((BigInteger)value);
 #endif
+                case PrimitiveTypeCode.SmallDec:
+                    try
+                    {
+#if (JSON_SharedGlobalCode)
+                        return ((SmallDec)value).ToString();
+#else
+                        Type SmallDecType = Type.GetType("SmallDec", true);
+                        dynamic changedObj = Convert.ChangeType(value, SmallDecType);
+                        changedObj.ToString();
+#endif
+                    }
+                    catch (Exception ex)
+                    {
+                        throw;
+                    }
+                    break;
+                    //return ToString((SmallDec)value);
             }
 
             throw new ArgumentException("Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".FormatWith(CultureInfo.InvariantCulture, value.GetType()));
         }
 
-        #region Serialize
+#region Serialize
         /// <summary>
         /// Serializes the specified object to a JSON string.
         /// </summary>
@@ -657,9 +689,9 @@ namespace Newtonsoft.Json
 
             return sw.ToString();
         }
-        #endregion
+#endregion
 
-        #region Deserialize
+#region Deserialize
         /// <summary>
         /// Deserializes the JSON to a .NET object.
         /// </summary>
@@ -812,9 +844,9 @@ namespace Newtonsoft.Json
                 return jsonSerializer.Deserialize(reader, type);
             }
         }
-        #endregion
+#endregion
 
-        #region Populate
+#region Populate
         /// <summary>
         /// Populates the object with values from the JSON string.
         /// </summary>
@@ -854,9 +886,9 @@ namespace Newtonsoft.Json
                 }
             }
         }
-        #endregion
+#endregion
 
-        #region Xml
+#region Xml
 #if HAVE_XML_DOCUMENT
         /// <summary>
         /// Serializes the <see cref="XmlNode"/> to a JSON string.
@@ -1014,6 +1046,6 @@ namespace Newtonsoft.Json
             return (XDocument)DeserializeObject(value, typeof(XDocument), converter);
         }
 #endif
-        #endregion
+#endregion
     }
 }

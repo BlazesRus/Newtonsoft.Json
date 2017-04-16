@@ -38,6 +38,9 @@ using System.Xml.Linq;
 #endif
 using Newtonsoft.Json.Utilities;
 using System.Runtime.CompilerServices;
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json.Converters
 {
@@ -1813,6 +1816,22 @@ namespace Newtonsoft.Json.Converters
 
                     // finished element will have no children to deserialize
                     manager.RemoveNamespace(string.Empty, manager.DefaultNamespace);
+                    break;
+                case JsonToken.SmallDec:
+                case JsonToken.Dynamic:
+                case JsonToken.PercentValV2:
+                try
+                {
+                    text = ConvertTokenToXmlValue(reader);
+                    if (text != null)
+                    {
+                        element.AppendChild(document.CreateTextNode(text));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
                     break;
                 default:
                     manager.PushScope();

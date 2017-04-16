@@ -118,6 +118,22 @@ namespace Newtonsoft.Json.Linq
         /// <summary>
         /// A TimeSpan value.
         /// </summary>
-        TimeSpan = 17
+        TimeSpan = 17,
+        /// <summary>
+        /// SmallDec decimal value
+        /// </summary>
+        SmallDec = 18,
+        /// <summary>
+        /// 
+        /// </summary>
+        Dynamic = 19,
+        /// <summary>
+        /// 
+        /// </summary>
+        DynamicContainer = 20,
+        /// <summary>
+        /// Weight range based value with 100% persistancy of accuracy
+        /// </summary>
+        PercentValV2 = 21
     }
 }

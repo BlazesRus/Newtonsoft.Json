@@ -26,6 +26,9 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Utilities;
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json.Serialization
 {
@@ -69,7 +72,12 @@ namespace Newtonsoft.Json.Serialization
             [typeof(DateTimeOffset)] = ReadType.ReadAsDateTimeOffset,
 #endif
             [typeof(float)] = ReadType.ReadAsDouble,
-            [typeof(double)] = ReadType.ReadAsDouble
+            [typeof(double)] = ReadType.ReadAsDouble,
+#if (JSON_SharedGlobalCode)
+            [typeof(SmallDec)] = ReadType.ReadAsSmallDec
+#else
+            [Type.GetType("SmallDec",true)] = ReadType.ReadAsSmallDec
+#endif
         };
     }
 }

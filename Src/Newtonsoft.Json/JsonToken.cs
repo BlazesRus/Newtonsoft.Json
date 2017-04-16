@@ -122,6 +122,22 @@ namespace Newtonsoft.Json
         /// <summary>
         /// Byte data.
         /// </summary>
-        Bytes = 17
+        Bytes = 17,
+        /// <summary>
+        /// SmallDec data.
+        /// </summary>
+        SmallDec = 18,
+        /// <summary>
+        /// Other unlisted data type
+        /// </summary>
+        Dynamic = 19,
+        /// <summary>
+        /// Other unlisted data type
+        /// </summary>
+        DynamicContainer = 20,
+        /// <summary>
+        /// PercentValV2 data
+        /// </summary>
+        PercentValV2 = 21
     }
 }
