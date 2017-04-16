@@ -245,7 +245,7 @@
             <param name="Y"></param>
             <returns></returns>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ModerateSuperDec.IsNull">
+        <member name="P:CSharpGlobalCode.GlobalCode_ExperimentalCode.ModerateSuperDec.IsNull">
             <summary>
             
             </summary>
@@ -1028,12 +1028,6 @@
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.LargeSuperDec.IsNull">
-            <summary>
-            
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.LargeSuperDec.GetBoolStatus">
             <summary>
             
             </summary>
@@ -5540,7 +5534,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns <c>true</c> if the next token was read successfully; <c>false</c> if there are no more tokens to read.</returns>
             <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.SkipAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5549,7 +5543,7 @@
             <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
             <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
             <remarks>The default behavior is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsBooleanAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5559,7 +5553,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Nullable`1"/> of <see cref="T:System.Boolean"/>. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsBytesAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5569,7 +5563,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Byte"/>[]. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behavior is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsDateTimeAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5579,7 +5573,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Nullable`1"/> of <see cref="T:System.DateTime"/>. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsDateTimeOffsetAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5589,7 +5583,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Nullable`1"/> of <see cref="T:System.DateTimeOffset"/>. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsDecimalAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5599,7 +5593,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Nullable`1"/> of <see cref="T:System.Decimal"/>. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsDoubleAsync(System.Threading.CancellationToken)">
             <summary>
@@ -5609,7 +5603,7 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Nullable`1"/> of <see cref="T:System.Double"/>. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonReader.ReadAsInt32Async(System.Threading.CancellationToken)">
             <summary>
@@ -5629,7 +5623,17 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.String"/>. This result will be <c>null</c> at the end of an array.</returns>
             <remarks>The default behavior is to execute synchronously, returning an already-completed task. Derived
-            classes can override this behavior for true asychronousity.</remarks>
+            classes can override this behavior for true asynchronousity.</remarks>
+        </member>
+        <member name="M:Newtonsoft.Json.JsonReader.ReadAsSmallDecAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously reads the next JSON token from the source as a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/>.
+            </summary>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
+            property returns the <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/>. This result will be <c>null</c> at the end of an array.</returns>
+            <remarks>The default behavior is to execute synchronously, returning an already-completed task. Derived
+            classes can override this behavior for true asynchronousity.</remarks>
         </member>
         <member name="T:Newtonsoft.Json.JsonReader.State">
             <summary>
@@ -6520,7 +6524,7 @@
             <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns <c>true</c> if the next token was read successfully; <c>false</c> if there are no more tokens to read.</returns>
-            <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+            <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
             execute synchronously, returning an already-completed task.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonTextReader.ReadAsBooleanAsync(System.Threading.CancellationToken)">
@@ -6530,7 +6534,7 @@
             <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.Nullable`1"/> of <see cref="T:System.Boolean"/>. This result will be <c>null</c> at the end of an array.</returns>
-            <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+            <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
             execute synchronously, returning an already-completed task.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonTextReader.ReadAsBytesAsync(System.Threading.CancellationToken)">
@@ -6600,7 +6604,17 @@
             <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
             <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
             property returns the <see cref="T:System.String"/>. This result will be <c>null</c> at the end of an array.</returns>
-            <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+            <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
+            execute synchronously, returning an already-completed task.</remarks>
+        </member>
+        <member name="M:Newtonsoft.Json.JsonTextReader.ReadAsSmallDecAsync(System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously reads the next JSON token from the source as a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/>.
+            </summary>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task`1"/> that represents the asynchronous read. The <see cref="P:System.Threading.Tasks.Task`1.Result"/>
+            property returns the <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/>. This result will be <c>null</c> at the end of an array.</returns>
+            <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
             execute synchronously, returning an already-completed task.</remarks>
         </member>
         <member name="M:Newtonsoft.Json.JsonTextReader.#ctor(System.IO.TextReader)">
