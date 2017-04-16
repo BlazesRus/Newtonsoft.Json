@@ -1901,6 +1901,18 @@ namespace Newtonsoft.Json.Converters
 #else
                     return XmlConvert.ToString(d, DateTimeUtils.ToDateTimeFormat(d.Kind));
 #endif
+#if (JSON_SharedGlobalCode)
+                case JsonToken.SmallDec:
+                    try
+                    {
+                        return XmlConvert.EncodeName(reader.Value.ToString());
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Failed to encode SmallDec reader value with exception " + ex.ToString());
+                        return null;
+                    }
+#endif
                 case JsonToken.Null:
                     return null;
                 default:
@@ -1967,6 +1979,7 @@ namespace Newtonsoft.Json.Converters
                 case JsonToken.Null:
                 case JsonToken.Boolean:
                 case JsonToken.Integer:
+                case JsonToken.SmallDec:
                 case JsonToken.Float:
                 case JsonToken.Date:
                 case JsonToken.StartConstructor:

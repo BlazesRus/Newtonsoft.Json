@@ -14,6 +14,7 @@
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Style", "CC0037:Remove commented code.", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0074:Make field readonly", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0049:Simplify expression", Justification = "Little to (likely)  no impact on performance")]
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0067:Virtual Method Called On Constructor", Justification = "<Pending>")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0052:Make field readonly", Justification = "<Pending>", Scope = "member", Target = "~F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdownSlider._delayRate")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0052:Make field readonly", Justification = "<Pending>", Scope = "member", Target = "~F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdownSlider._repeatSpeed")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "CC0052:Make field readonly", Justification = "<Pending>", Scope = "member", Target = "~F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdownSlider._timer")]
