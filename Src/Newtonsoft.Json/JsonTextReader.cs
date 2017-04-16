@@ -2088,23 +2088,31 @@ namespace Newtonsoft.Json
 
                 numberType = JsonToken.Float;
             }
-            //else if (readType == ReadType.ReadAsSmallDec)
-            //{
-            //    try
-            //    {
-            //        Type SmallDecType = Type.GetType("SmallDec",false);
-            //        typeof(SmallDecType) Value = _stringReference.ToString();
-            //        numberValue = Value;
-            //        numberType = JsonToken.SmallDec;
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        throw;
-            //    }
-            //}
+            else if (readType == ReadType.ReadAsSmallDec)
+            {
+                try
+                {
+                    //Type SmallDecType = Type.GetType("SmallDec", false);
+                    //typeof(SmallDecType) Value = _stringReference.ToString();
+#if (JSON_SharedGlobalCode)
+                    numberValue = (SmallDec)Value.ToString();
+#else
+                    Type SmallDecType = Type.GetType("SmallDec", true);
+                    dynamic changedObj = Convert.ChangeType(Value.ToString(), SmallDecType);
+                    numberValue = changedObj;
+#endif
+
+                    numberType = JsonToken.SmallDec;
+                }
+                catch (Exception ex)
+                {
+                    System.Console.WriteLine("Exception called from JSonTextReader->ParseReadNumber() of type " + ex.ToString());
+                    throw;
+                }
+            }
             //else if (readType == ReadType.ReadAsPercentValV2)
             //{
-            //    PercentValV2 Value = (PercentValV2) _stringReference.ToString();
+            //    PercentValV2 Value = (PercentValV2)_stringReference.ToString();
             //    numberValue = Value;
             //    numberType = JsonToken.PercentValV2;
             //}

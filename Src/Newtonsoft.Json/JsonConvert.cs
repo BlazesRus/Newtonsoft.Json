@@ -539,9 +539,9 @@ namespace Newtonsoft.Json
                     }
                     catch (Exception ex)
                     {
+                        System.Console.WriteLine("Exception called from JConvert->ToString() of type " + ex.ToString());
                         throw;
                     }
-                    break;
                     //return ToString((SmallDec)value);
             }
 

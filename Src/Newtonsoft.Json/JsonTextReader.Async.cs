@@ -34,13 +34,16 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Utilities;
+#if (JSON_SharedGlobalCode)
+    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json
 {
     public partial class JsonTextReader
     {
         // It's not safe to perform the async methods here in a derived class as if the synchronous equivalent
-        // has been overriden then the asychronous method will no longer be doing the same operation
+        // has been overridden then the asynchronous method will no longer be doing the same operation
 #if HAVE_ASYNC // Double-check this isn't included inappropriately.
         private readonly bool _safeAsync;
 #endif
@@ -51,7 +54,7 @@ namespace Newtonsoft.Json
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
         /// <returns>A <see cref="Task{TResult}"/> that represents the asynchronous read. The <see cref="Task{TResult}.Result"/>
         /// property returns <c>true</c> if the next token was read successfully; <c>false</c> if there are no more tokens to read.</returns>
-        /// <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+        /// <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
         /// execute synchronously, returning an already-completed task.</remarks>
         public override Task<bool> ReadAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1378,7 +1381,7 @@ namespace Newtonsoft.Json
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
         /// <returns>A <see cref="Task{TResult}"/> that represents the asynchronous read. The <see cref="Task{TResult}.Result"/>
         /// property returns the <see cref="Nullable{T}"/> of <see cref="bool"/>. This result will be <c>null</c> at the end of an array.</returns>
-        /// <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+        /// <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
         /// execute synchronously, returning an already-completed task.</remarks>
         public override Task<bool?> ReadAsBooleanAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1744,7 +1747,7 @@ namespace Newtonsoft.Json
         /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
         /// <returns>A <see cref="Task{TResult}"/> that represents the asynchronous read. The <see cref="Task{TResult}.Result"/>
         /// property returns the <see cref="string"/>. This result will be <c>null</c> at the end of an array.</returns>
-        /// <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+        /// <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
         /// execute synchronously, returning an already-completed task.</remarks>
         public override Task<string> ReadAsStringAsync(CancellationToken cancellationToken = default(CancellationToken))
         {
@@ -1754,6 +1757,25 @@ namespace Newtonsoft.Json
         internal async Task<string> DoReadAsStringAsync(CancellationToken cancellationToken)
         {
             return (string)await ReadStringValueAsync(ReadType.ReadAsString, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Asynchronously reads the next JSON token from the source as a <see cref="SmallDec"/>.
+        /// </summary>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
+        /// <returns>A <see cref="Task{TResult}"/> that represents the asynchronous read. The <see cref="Task{TResult}.Result"/>
+        /// property returns the <see cref="SmallDec"/>. This result will be <c>null</c> at the end of an array.</returns>
+        /// <remarks>Derived classes must override this method to get asynchronous behavior. Otherwise it will
+        /// execute synchronously, returning an already-completed task.</remarks>
+        [CLSCompliant(false)]
+        public override Task<SmallDec> ReadAsSmallDecAsync(CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return _safeAsync ? DoReadAsSmallDecAsync(cancellationToken) : base.ReadAsSmallDecAsync(cancellationToken);
+        }
+
+        internal async Task<SmallDec> DoReadAsSmallDecAsync(CancellationToken cancellationToken)
+        {
+            return (SmallDec)await ReadNumberValueAsync(ReadType.ReadAsSmallDec, cancellationToken).ConfigureAwait(false);
         }
     }
 }

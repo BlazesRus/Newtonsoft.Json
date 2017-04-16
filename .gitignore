@@ -20,3 +20,4 @@ _ReSharper.*
 **/Newtonsoft.JsonOld/*
 *.dll
 *.dll.*
+*.pdb

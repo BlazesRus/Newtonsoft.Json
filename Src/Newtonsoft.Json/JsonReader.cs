@@ -1223,7 +1223,7 @@ namespace Newtonsoft.Json
                 case JsonToken.Integer:
                     return (long)Value;
                 case JsonToken.Float:
-                    return (double)Value;
+                    return (decimal)Value;
                 case JsonToken.Boolean:
                     return (SmallDec)(bool)Value;
             }
