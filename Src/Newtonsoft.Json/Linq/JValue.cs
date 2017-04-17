@@ -676,6 +676,14 @@ namespace Newtonsoft.Json.Linq
             {
                 return JTokenType.TimeSpan;
             }
+            else if(value is SmallDec)
+            {
+                return JTokenType.SmallDec;
+            }
+            //else
+            //{
+            //    return JTokenType.Dynamic;
+            //}
 
             throw new ArgumentException("Could not determine JSON object type for type {0}.".FormatWith(CultureInfo.InvariantCulture, value.GetType()));
         }
@@ -831,6 +839,12 @@ namespace Newtonsoft.Json.Linq
                 case JTokenType.Uri:
                     writer.WriteValue((Uri)_value);
                     return;
+                case JTokenType.SmallDec:
+                    writer.WriteValue((SmallDec)_value);
+                    return;
+                //case JTokenType.Dynamic:
+                //    writer.WriteValue((dynamic)_value);
+                //    return;
             }
 
             throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(Type), _valueType, "Unexpected token type.");

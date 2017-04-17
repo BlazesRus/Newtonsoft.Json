@@ -1046,9 +1046,9 @@ namespace Newtonsoft.Json.Serialization
                                 }
                         }
                         default:
-                            {
+                        {
                                 return ConvertUtils.ConvertOrCast(value, culture, contract.NonNullableUnderlyingType);
-                            }
+                        }
                     }
                 }
             }

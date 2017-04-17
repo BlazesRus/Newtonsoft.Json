@@ -1830,6 +1830,7 @@ namespace Newtonsoft.Json.Converters
                 }
                 catch (Exception ex)
                 {
+                    System.Console.WriteLine("Exception called from XmlNodeConverter->CreateElement of type " + ex.ToString());
                     throw;
                 }
                     break;
@@ -2305,6 +2306,10 @@ namespace Newtonsoft.Json.Converters
         /// </returns>
         public override bool CanConvert(Type valueType)
         {
+            if(valueType.ToString()=="SmallDec")
+            {
+                return true;
+            }
 #if HAVE_XLINQ
             if (valueType.AssignableToTypeName("System.Xml.Linq.XObject", false))
             {
