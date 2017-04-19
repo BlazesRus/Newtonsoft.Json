@@ -3,7 +3,7 @@
     <Import Project="..\..\..\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\..\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" />
     <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">ReleaseSharedGlobalCode</Configuration>
+        <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
         <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{EEEA67F9-9089-481D-A4DC-0966DEC9FD7D}</ProjectGuid>
         <OutputType>Library</OutputType>
@@ -20,7 +20,7 @@
         <DocumentationFile>DocumentationXML\Newtonsoft.Json.xml</DocumentationFile>
         <OutputPath>..\..\lib\Net45\</OutputPath>
         <ErrorReport>prompt</ErrorReport>
-        <SqlPermissionLevel>eUnsafe</SqlPermissionLevel>
+		<DefineConstants>HAVE_ADO_NET;HAVE_APP_DOMAIN;HAVE_ASYNC;HAVE_BIG_INTEGER;HAVE_BINARY_FORMATTER;HAVE_BINARY_SERIALIZATION;HAVE_BINARY_EXCEPTION_SERIALIZATION;HAVE_CAS;HAVE_CHAR_TO_LOWER_WITH_CULTURE;HAVE_CHAR_TO_STRING_WITH_CULTURE;HAVE_COM_ATTRIBUTES;HAVE_COMPONENT_MODEL;HAVE_CONCURRENT_COLLECTIONS;HAVE_COVARIANT_GENERICS;HAVE_DATA_CONTRACTS;HAVE_DATE_TIME_OFFSET;HAVE_DB_NULL_TYPE_CODE;HAVE_DYNAMIC;HAVE_EMPTY_TYPES;HAVE_ENTITY_FRAMEWORK;HAVE_EXPRESSIONS;HAVE_FSHARP_TYPES;HAVE_FULL_REFLECTION;HAVE_GUID_TRY_PARSE;HAVE_HASH_SET;HAVE_ICLONEABLE;HAVE_ICONVERTIBLE;HAVE_IGNORE_DATA_MEMBER_ATTRIBUTE;HAVE_IMMUTABLE_COLLECTIONS;HAVE_INOTIFY_COLLECTION_CHANGED;HAVE_INOTIFY_PROPERTY_CHANGING;HAVE_ISET;HAVE_LINQ;HAVE_MEMORY_BARRIER;HAVE_METHOD_IMPL_ATTRIBUTE;HAVE_NON_SERIALIZED_ATTRIBUTE;HAVE_READ_ONLY_COLLECTIONS;HAVE_REFLECTION_EMIT;HAVE_SECURITY_SAFE_CRITICAL_ATTRIBUTE;HAVE_SERIALIZATION_BINDER_BIND_TO_NAME;HAVE_STREAM_READER_WRITER_CLOSE;HAVE_STRING_JOIN_WITH_ENUMERABLE;HAVE_TIME_SPAN_PARSE_WITH_CULTURE;HAVE_TIME_SPAN_TO_STRING_WITH_CULTURE;HAVE_TIME_ZONE_INFO;HAVE_TRACE_WRITER;HAVE_TYPE_DESCRIPTOR;HAVE_UNICODE_SURROGATE_DETECTION;HAVE_VARIANT_TYPE_PARAMETERS;HAVE_VERSION_TRY_PARSE;HAVE_XLINQ;HAVE_XML_DOCUMENT;HAVE_XML_DOCUMENT_TYPE</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Label="AnyCpu Options" Condition=" '$(Platform)' =='AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -37,8 +37,8 @@
             <PropertyGroup Label="DefaultDebugOptions">
                 <DebugSymbols>true</DebugSymbols>
                 <DebugType>full</DebugType>
-                <DefineConstants>CODE_ANALYSIS;TRACE;DEBUG;HAVE_ADO_NET;HAVE_APP_DOMAIN;HAVE_ASYNC;HAVE_BIG_INTEGER;HAVE_BINARY_FORMATTER;HAVE_BINARY_SERIALIZATION;HAVE_CAS;HAVE_CHAR_TO_LOWER_WITH_CULTURE;HAVE_CHAR_TO_STRING_WITH_CULTURE;HAVE_COM_ATTRIBUTES;HAVE_COMPONENT_MODEL;HAVE_CONCURRENT_COLLECTIONS;HAVE_COVARIANT_GENERICS;HAVE_DATA_CONTRACTS;HAVE_DATE_TIME_OFFSET;HAVE_DB_NULL_TYPE_CODE;HAVE_DYNAMIC;HAVE_EMPTY_TYPES;HAVE_ENTITY_FRAMEWORK;HAVE_EXPRESSIONS;HAVE_FSHARP_TYPES;HAVE_FULL_REFLECTION;HAVE_GUID_TRY_PARSE;HAVE_HASH_SET;HAVE_ICLONEABLE;HAVE_ICONVERTIBLE;HAVE_IGNORE_DATA_MEMBER_ATTRIBUTE;HAVE_IMMUTABLE_COLLECTIONS;HAVE_INOTIFY_COLLECTION_CHANGED;HAVE_INOTIFY_PROPERTY_CHANGING;HAVE_ISET;HAVE_LINQ;HAVE_MEMORY_BARRIER;HAVE_METHOD_IMPL_ATTRIBUTE;HAVE_NON_SERIALIZED_ATTRIBUTE;HAVE_READ_ONLY_COLLECTIONS;HAVE_REFLECTION_EMIT;HAVE_SECURITY_SAFE_CRITICAL_ATTRIBUTE;HAVE_SERIALIZATION_BINDER_BIND_TO_NAME;HAVE_STREAM_READER_WRITER_CLOSE;HAVE_STRING_JOIN_WITH_ENUMERABLE;HAVE_TIME_SPAN_PARSE_WITH_CULTURE;HAVE_TIME_SPAN_TO_STRING_WITH_CULTURE;HAVE_TIME_ZONE_INFO;HAVE_TRACE_WRITER;HAVE_TYPE_DESCRIPTOR;HAVE_UNICODE_SURROGATE_DETECTION;HAVE_VARIANT_TYPE_PARAMETERS;HAVE_VERSION_TRY_PARSE;HAVE_XLINQ;HAVE_XML_DOCUMENT;HAVE_XML_DOCUMENT_TYPE;BlazesGlobalCode_Disable128BitFeatures;BlazesGlobalCode_RestrictConversionBetweenSuperDec</DefineConstants>
-                <Optimize>false</Optimize>
+				<DefineConstants>$(DefineConstants);DEBUG</DefineConstants>
+				<Optimize>false</Optimize>
                 <UseVSHostingProcess>true</UseVSHostingProcess>
             </PropertyGroup>
         </When>
@@ -46,14 +46,13 @@
             <PropertyGroup Label="DefaultReleaseOptions">
                 <DebugType>None</DebugType>
                 <Optimize>true</Optimize>
-                <DefineConstants>TRACE;CODE_ANALYSIS;HAVE_ADO_NET;HAVE_APP_DOMAIN;HAVE_ASYNC;HAVE_BIG_INTEGER;HAVE_BINARY_FORMATTER;HAVE_BINARY_SERIALIZATION;HAVE_CAS;HAVE_CHAR_TO_LOWER_WITH_CULTURE;HAVE_CHAR_TO_STRING_WITH_CULTURE;HAVE_COM_ATTRIBUTES;HAVE_COMPONENT_MODEL;HAVE_CONCURRENT_COLLECTIONS;HAVE_COVARIANT_GENERICS;HAVE_DATA_CONTRACTS;HAVE_DATE_TIME_OFFSET;HAVE_DB_NULL_TYPE_CODE;HAVE_DYNAMIC;HAVE_EMPTY_TYPES;HAVE_ENTITY_FRAMEWORK;HAVE_EXPRESSIONS;HAVE_FSHARP_TYPES;HAVE_FULL_REFLECTION;HAVE_GUID_TRY_PARSE;HAVE_HASH_SET;HAVE_ICLONEABLE;HAVE_ICONVERTIBLE;HAVE_IGNORE_DATA_MEMBER_ATTRIBUTE;HAVE_IMMUTABLE_COLLECTIONS;HAVE_INOTIFY_COLLECTION_CHANGED;HAVE_INOTIFY_PROPERTY_CHANGING;HAVE_ISET;HAVE_LINQ;HAVE_MEMORY_BARRIER;HAVE_METHOD_IMPL_ATTRIBUTE;HAVE_NON_SERIALIZED_ATTRIBUTE;HAVE_READ_ONLY_COLLECTIONS;HAVE_REFLECTION_EMIT;HAVE_SECURITY_SAFE_CRITICAL_ATTRIBUTE;HAVE_SERIALIZATION_BINDER_BIND_TO_NAME;HAVE_STREAM_READER_WRITER_CLOSE;HAVE_STRING_JOIN_WITH_ENUMERABLE;HAVE_TIME_SPAN_PARSE_WITH_CULTURE;HAVE_TIME_SPAN_TO_STRING_WITH_CULTURE;HAVE_TIME_ZONE_INFO;HAVE_TRACE_WRITER;HAVE_TYPE_DESCRIPTOR;HAVE_UNICODE_SURROGATE_DETECTION;HAVE_VARIANT_TYPE_PARAMETERS;HAVE_VERSION_TRY_PARSE;HAVE_XLINQ;HAVE_XML_DOCUMENT;HAVE_XML_DOCUMENT_TYPE;BlazesGlobalCode_Disable128BitFeatures;BlazesGlobalCode_RestrictConversionBetweenSuperDec</DefineConstants>
-                <WarningLevel>4</WarningLevel>
+               <WarningLevel>4</WarningLevel>
                 <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
             </PropertyGroup>
         </Otherwise>
     </Choose>
-    <PropertyGroup Condition="$(Configuration.Contains('SharedGlobalCode')) ">
-        <DefineConstants>$(DefineConstants);JSON_SharedGlobalCode</DefineConstants>
+    <PropertyGroup Label="AdditionalConstants#1">
+        <DefineConstants>$(DefineConstants);JSON_SharedGlobalCode;BlazesGlobalCode_Disable128BitFeatures;BlazesGlobalCode_RestrictConversionBetweenSuperDec;TRACE;CODE_ANALYSIS;$(AdditionalConstants)</DefineConstants>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <IntermediateOutputPath>obj\Debug\Net45\</IntermediateOutputPath>
@@ -66,18 +65,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
         <IntermediateOutputPath>obj\Releasex64\Net45\</IntermediateOutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseSharedGlobalCode|AnyCPU'">
-        <IntermediateOutputPath>obj\ReleaseSharedGlobalCode\Net45\</IntermediateOutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseSharedGlobalCode|x64'">
-        <IntermediateOutputPath>obj\ReleaseSharedGlobalCodex64\Net45\</IntermediateOutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugSharedGlobalCode|AnyCPU'">
-        <IntermediateOutputPath>obj\DebugSharedGlobalCode\Net45\</IntermediateOutputPath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugSharedGlobalCode|x64'">
-        <IntermediateOutputPath>obj\DebugSharedGlobalCodex64\Net45\</IntermediateOutputPath>
     </PropertyGroup>
     <ItemGroup><!--Using mostly same references that PoESkillTree uses to prevent conflicts on method usage(and hopefully avoid some exceptions-->
         <Reference Include="System.Numerics" />
@@ -164,7 +151,7 @@
         <Reference Include="PresentationCore" />
         <Reference Include="PresentationFramework" />
     </ItemGroup>
-    <Import Project="..\..\..\..\WPFSKillTree\PoESkillTreeGlobalCodeV3.projitems" Label="Shared" Condition="$(Configuration.Contains('SharedGlobalCode')) " />
+    <Import Project="..\..\..\..\WPFSKillTree\PoESkillTreeGlobalCodeV3.projitems" Label="Shared"/>
     <ItemGroup>
         <Compile Include="Bson\BsonBinaryType.cs" />
         <Compile Include="Bson\BsonBinaryWriter.cs" />
@@ -397,12 +384,6 @@
         <Folder Include="GlobalCode_VariableConversionFunctions\" />
     </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-    <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-        <PropertyGroup>
-            <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-        </PropertyGroup>
-        <Error Condition="!Exists('..\..\..\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\Microsoft.Net.Compilers.2.0.1\build\Microsoft.Net.Compilers.props'))" />
-    </Target>
     <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
