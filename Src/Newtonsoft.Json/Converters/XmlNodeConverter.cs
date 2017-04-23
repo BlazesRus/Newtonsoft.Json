@@ -1670,7 +1670,7 @@ namespace Newtonsoft.Json.Converters
             }
             else
             {
-                reader.Read();
+                reader.ReadAndAssert();
                 DeserializeNode(reader, document, manager, rootNode);
             }
 
@@ -2012,7 +2012,7 @@ namespace Newtonsoft.Json.Converters
                                     }
 
                                     attributeName = attributeName.Substring(1);
-                                    reader.Read();
+                                    reader.ReadAndAssert();
                                     attributeValue = ConvertTokenToXmlValue(reader);
                                     attributeNameValues.Add(attributeName, attributeValue);
 
@@ -2060,7 +2060,7 @@ namespace Newtonsoft.Json.Converters
                                             }
 
                                             attributeName = attributeName.Substring(1);
-                                            reader.Read();
+                                            reader.ReadAndAssert();
 
                                             if (!JsonTokenUtils.IsPrimitiveToken(reader.TokenType))
                                             {
@@ -2115,15 +2115,15 @@ namespace Newtonsoft.Json.Converters
                     switch (reader.Value.ToString())
                     {
                         case "@version":
-                            reader.Read();
+                            reader.ReadAndAssert();
                             version = ConvertTokenToXmlValue(reader);
                             break;
                         case "@encoding":
-                            reader.Read();
+                            reader.ReadAndAssert();
                             encoding = ConvertTokenToXmlValue(reader);
                             break;
                         case "@standalone":
-                            reader.Read();
+                            reader.ReadAndAssert();
                             standalone = ConvertTokenToXmlValue(reader);
                             break;
                         default:
@@ -2153,19 +2153,19 @@ namespace Newtonsoft.Json.Converters
                 switch (reader.Value.ToString())
                 {
                     case "@name":
-                        reader.Read();
+                        reader.ReadAndAssert();
                         name = ConvertTokenToXmlValue(reader);
                         break;
                     case "@public":
-                        reader.Read();
+                        reader.ReadAndAssert();
                         publicId = ConvertTokenToXmlValue(reader);
                         break;
                     case "@system":
-                        reader.Read();
+                        reader.ReadAndAssert();
                         systemId = ConvertTokenToXmlValue(reader);
                         break;
                     case "@internalSubset":
-                        reader.Read();
+                        reader.ReadAndAssert();
                         internalSubset = ConvertTokenToXmlValue(reader);
                         break;
                     default:
@@ -2201,7 +2201,7 @@ namespace Newtonsoft.Json.Converters
                         }
 
                         string propertyName = reader.Value.ToString();
-                        reader.Read();
+                        reader.ReadAndAssert();
 
                         if (reader.TokenType == JsonToken.StartArray)
                         {
