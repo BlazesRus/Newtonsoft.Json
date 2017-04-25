@@ -4,31 +4,6 @@
         <name>CustomNewtonsoft.Json</name>
     </assembly>
     <members>
-        <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.StringToSmallDec">
-            <summary>
-            String to SmallDec ValueConversion class
-            </summary>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.StringToSmallDec.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            Convert value from String to SmallDec 
-            </summary>
-            <param name="value"></param>
-            <param name="targetType"></param>
-            <param name="parameter"></param>
-            <param name="culture"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.StringToSmallDec.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            Convert value from SmallDec back to String
-            </summary>
-            <param name="value"></param>
-            <param name="targetType"></param>
-            <param name="parameter"></param>
-            <param name="culture"></param>
-            <returns></returns>
-        </member>
         <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
             Represent +- 65535.9999 with 100% consistency of accuracy(or 6 decimal places worth if SmallDecExpandedDecimal preprocessor used(Not Implemented yet))
@@ -1617,12 +1592,154 @@
             <param name="Y"></param>
             <returns></returns>
         </member>
-        <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter">
+        <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapperConverter">
+            <summary>
+            Provides a unified way to convert <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/> instances to <see cref="T:System.IO.Stream"/>
+            instances as well as <see cref="T:System.IO.Stream"/> instances to <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/> instances.
+            </summary>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapperConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns a value indicating whether this converter can convert from <paramref name="sourceType"/> to <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/>,
+            using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="sourceType">A <see cref="T:System.Type"/> that represents the type you want to convert from.</param>
+            <returns>true if this converter can perform the conversion; otherwise false.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapperConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Converts <paramref name="value"/> to a <see cref="T:System.IO.Stream"/>, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">The <see cref="T:System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapperConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Returns a value indicating whether this converter can convert to <paramref name="destinationType"/> from <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/>,
+            using the specified context.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="destinationType">A <see cref="T:System.Type"/> that represents the type you want to convert to.</param>
+            <returns>true if this converter can perform the conversion; otherwise, false.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapperConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            Converts <paramref name="value"/> to <paramref name="destinationType"/>, using the specified context and culture information.
+            </summary>
+            <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            <param name="culture">A <see cref="T:System.Globalization.CultureInfo"/>.  If null is passed, the current culture is assumed.</param>
+            <param name="value">The <see cref="T:System.Object"/> to convert.</param>
+            <param name="destinationType">The <see cref="T:System.Type"/> to convert the value parameter to.</param>
+            <returns>An <see cref="T:System.Object"/> that represents the converted value.</returns>
+        </member>
+        <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.IStreamWrapper">
             <summary>
             
             </summary>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)">
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.IStreamWrapper.Close">
+            <summary>
+            Closes this instance.
+            </summary>
+        </member>
+        <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper">
+            <summary>
+            The StreamWrapper class provides an implementation of <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.IStreamWrapper"/> that wraps <see cref="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream"/>.
+            </summary>
+        </member>
+        <member name="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream">
+            <summary>
+            The <see cref="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream"/> wrapped by this object.
+            </summary>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes a new instance of the <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/> class.
+            </summary>
+            <param name="stream">The object to wrap.</param>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.op_Implicit(CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper)~System.IO.Stream">
+            <summary>
+            Converts <paramref name="source"/> to a <see cref="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream"/>
+            </summary>
+            <param name="source">The object to convert.</param>
+            <returns>A <see cref="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream"/> that represents the same data as <paramref name="source"/>.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.op_Implicit(System.IO.Stream)~CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper">
+            <summary>
+            Converts <paramref name="source"/> to a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/>
+            </summary>
+            <param name="source">The object to convert.</param>
+            <returns>A <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/> that represents the same data as <paramref name="source"/>.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.FromStream(System.IO.Stream)">
+            <summary>
+            Converts <paramref name="source"/> to a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/>
+            </summary>
+            <param name="source">The object to convert.</param>
+            <returns>A <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper"/> that represents the same data as <paramref name="source"/>.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.ToStream(CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper)">
+            <summary>
+            Converts <paramref name="source"/> to a <see cref="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream"/>
+            </summary>
+            <param name="source">The object to convert.</param>
+            <returns>A <see cref="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Stream"/> that represents the same data as <paramref name="source"/>.</returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ImplementingTypeConverter.StreamWrapper.Close">
+            <summary>
+            Closes this instance.
+            </summary>
+        </member>
+        <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter">
+            <summary>
+            SmallDec ValueConversion class
+            Based on https://msdn.microsoft.com/en-us/library/ayybcxe5.aspx
+            Stream conversions heavily based on code from https://ihadthisideaonce.com/2011/07/18/implementing-a-typeconverter/
+            </summary>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
+            <summary>
+            Convert from SmallDec to other value types
+            </summary>
+            <param name="context"></param>
+            <param name="culture"></param>
+            <param name="value"></param>
+            <param name="destinationType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
+            <summary>
+            Overrides the CanConvertFrom method of TypeConverter.
+            The ITypeDescriptorContext interface provides the context for the
+            conversion. Typically, this interface is used at design time to 
+            provide information about the design-time container.
+            </summary>
+            <param name="context"></param>
+            <param name="culture"></param>
+            <param name="value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+            Checks to determine if can convert to other types
+            </summary>
+            <param name="context"></param>
+            <param name="destinationType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
+            <summary>
+             Checks to determine if can convert from other types
+            </summary>
+            <param name="context"></param>
+            <param name="sourceType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.ConvertBack(System.Object,System.Type[],System.Object,System.Globalization.CultureInfo)">
             <summary>
             
             </summary>
@@ -1632,7 +1749,7 @@
             <param name="culture"></param>
             <returns></returns>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.Convert(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
             <summary>
             
             </summary>
@@ -1642,45 +1759,7 @@
             <param name="culture"></param>
             <returns></returns>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.CanConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Type)">
-            <summary>
-            Overrides the CanConvertFrom method of TypeConverter.
-            The ITypeDescriptorContext interface provides the context for the
-            conversion. Typically, this interface is used at design time to 
-            provide information about the design-time container.
-            </summary>
-            <param name="context"></param>
-            <param name="sourceType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.CanConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Type)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-            <param name="destinationType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-            <param name="culture"></param>
-            <param name="value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.ConvertTo(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.Object,System.Type)">
-            <summary>
-            
-            </summary>
-            <param name="context"></param>
-            <param name="culture"></param>
-            <param name="value"></param>
-            <param name="destinationType"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.Convert(System.Object[],System.Type,System.Object,System.Globalization.CultureInfo)">
             <summary>
             
             </summary>
@@ -1690,7 +1769,7 @@
             <param name="culture"></param>
             <returns></returns>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SuperDec_SmallDec_TypeConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec_TypeConverter.ConvertBack(System.Object,System.Type,System.Object,System.Globalization.CultureInfo)">
             <summary>
             
             </summary>
@@ -12955,36 +13034,6 @@
         <member name="F:Newtonsoft.Json.WriteState.Start">
             <summary>
             A <see cref="T:Newtonsoft.Json.JsonWriter"/> write method has not been called.
-            </summary>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
             </summary>
         </member>
     </members>
