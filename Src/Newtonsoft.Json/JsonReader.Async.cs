@@ -30,7 +30,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Utilities;
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
     using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 

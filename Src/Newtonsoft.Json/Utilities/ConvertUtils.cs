@@ -34,7 +34,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
     using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 #if !HAVE_LINQ
@@ -156,7 +156,7 @@ namespace Newtonsoft.Json.Utilities
                 { typeof(Uri), PrimitiveTypeCode.Uri },
                 { typeof(string), PrimitiveTypeCode.String },
                 { typeof(byte[]), PrimitiveTypeCode.Bytes },
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
                 { typeof(SmallDec), PrimitiveTypeCode.SmallDec },
 #else
                 { typeof(SmallDec), PrimitiveTypeCode.SmallDec },

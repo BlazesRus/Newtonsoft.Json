@@ -38,7 +38,7 @@ using System.Xml.Linq;
 #endif
 using Newtonsoft.Json.Utilities;
 using System.Runtime.CompilerServices;
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
     using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
@@ -1902,7 +1902,7 @@ namespace Newtonsoft.Json.Converters
 #else
                     return XmlConvert.ToString(d, DateTimeUtils.ToDateTimeFormat(d.Kind));
 #endif
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
                 case JsonToken.SmallDec:
                     try
                     {

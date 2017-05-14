@@ -38,7 +38,7 @@ using System.Text;
 #if HAVE_XLINQ
 using System.Xml.Linq;
 #endif
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
     using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
@@ -449,7 +449,7 @@ namespace Newtonsoft.Json
             return JavaScriptUtils.ToEscapedJavaScriptString(value, delimiter, true, stringEscapeHandling);
         }
 
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
         /// <summary>
         /// Converts the <see cref="SmallDec"/> to its JSON string representation.
         /// </summary>
@@ -529,7 +529,7 @@ namespace Newtonsoft.Json
                 case PrimitiveTypeCode.SmallDec:
                     try
                     {
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
                         return ((SmallDec)value).ToString();
 #else
                         Type SmallDecType = Type.GetType("SmallDec", true);

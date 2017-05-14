@@ -37,7 +37,7 @@ using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
 #endif
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
     using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
@@ -1016,6 +1016,7 @@ namespace Newtonsoft.Json
                 case JsonToken.String:
                 case JsonToken.Raw:
                 case JsonToken.Bytes:
+                case JsonToken.SmallDec:
                     SetPostValueState(updateIndex);
                     break;
             }
@@ -1201,7 +1202,7 @@ namespace Newtonsoft.Json
         /// <returns>A <see cref="SmallDec"/>. This method will return <c>null</c> at the end of an array.</returns>
         [CLSCompliant(false)]
         public virtual
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
         SmallDec
 #else
         dynamic
@@ -1209,7 +1210,7 @@ namespace Newtonsoft.Json
         ReadAsSmallDec()
         {
             JsonToken t = GetContentToken();
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
             switch (t)
             {
                 case JsonToken.None:
@@ -1219,7 +1220,15 @@ namespace Newtonsoft.Json
                 case JsonToken.String:
                     return Value.ToString();
                 case JsonToken.SmallDec:
-                    return (SmallDec)Value;
+                    if (Value.GetType() == typeof(SmallDec))
+                    {
+                        return (SmallDec)Value;
+                    }
+                    else
+                    {
+                        dynamic changedObj = Convert.ChangeType(Value, Value.GetType(), CultureInfo.CurrentCulture);
+                        return (SmallDec)changedObj;
+                    }
                 case JsonToken.Integer:
                     return (long)Value;
                 case JsonToken.Float:

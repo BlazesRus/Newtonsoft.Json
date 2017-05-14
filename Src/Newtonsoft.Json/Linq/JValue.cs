@@ -185,6 +185,18 @@ namespace Newtonsoft.Json.Linq
         {
         }
 
+#if (JSON_SmallDecSupport)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JValue"/> class with the given value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        [CLSCompliant(false)]
+        public JValue(SmallDec value)
+            : this(value, JTokenType.SmallDec)
+        {
+        }
+#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="JValue"/> class with the given value.
         /// </summary>
@@ -391,12 +403,8 @@ namespace Newtonsoft.Json.Linq
                     TimeSpan ts2 = (TimeSpan)objB;
 
                     return ts1.CompareTo(ts2);
+#if(JSON_SmallDecSupport)
                 case JTokenType.SmallDec:
-#if(JSON_SharedGlobalCode)
-                    SmallDec Value01 = (SmallDec) objA;
-                    SmallDec Value02 = (SmallDec)objB;
-                    return Value01.CompareTo(Value02);
-#else
                     SmallDec Value01 = (SmallDec) objA;
                     SmallDec Value02 = (SmallDec)objB;
                     return Value01.CompareTo(Value02);
@@ -1187,7 +1195,16 @@ namespace Newtonsoft.Json.Linq
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
         {
-            return ToObject(conversionType);
+            if (conversionType == typeof(SmallDec))
+            {
+                //dynamic changedObj = System.Convert.ChangeType(this, conversionType, provider);
+                return (SmallDec)this.ToString(provider);
+            }
+            else
+            {
+                return ToObject(conversionType);
+            }
+            
         }
 #endif
     }

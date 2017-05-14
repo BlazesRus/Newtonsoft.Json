@@ -52,7 +52,7 @@
     </Otherwise>
   </Choose>
   <PropertyGroup Label="AdditionalConstants#1">
-    <DefineConstants>$(DefineConstants);JSON_SharedGlobalCode;BlazesGlobalCode_Disable128BitFeatures;BlazesGlobalCode_RestrictConversionBetweenSuperDec;TRACE;CODE_ANALYSIS;$(AdditionalConstants)</DefineConstants>
+    <DefineConstants>$(DefineConstants);JSON_SmallDecSupport;BlazesGlobalCode_Disable128BitFeatures;BlazesGlobalCode_RestrictConversionBetweenSuperDec;TRACE;CODE_ANALYSIS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <IntermediateOutputPath>obj\Debug\Net45\</IntermediateOutputPath>

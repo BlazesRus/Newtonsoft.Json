@@ -2144,6 +2144,7 @@ namespace Newtonsoft.Json.Linq
                 case JsonToken.Date:
                 case JsonToken.Boolean:
                 case JsonToken.Bytes:
+                case JsonToken.SmallDec:
                     JValue v = new JValue(reader.Value);
                     v.SetLineInfo(lineInfo, settings);
                     return v;

@@ -26,7 +26,7 @@
 using System;
 using System.Collections.Generic;
 using Newtonsoft.Json.Utilities;
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
     using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
@@ -73,7 +73,7 @@ namespace Newtonsoft.Json.Serialization
 #endif
             [typeof(float)] = ReadType.ReadAsDouble,
             [typeof(double)] = ReadType.ReadAsDouble,
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
             [typeof(SmallDec)] = ReadType.ReadAsSmallDec
 #else
             [Type.GetType("SmallDec",true)] = ReadType.ReadAsSmallDec

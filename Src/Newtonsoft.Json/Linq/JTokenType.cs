@@ -132,7 +132,7 @@ namespace Newtonsoft.Json.Linq
         /// </summary>
         DynamicContainer = 20,
         /// <summary>
-        /// Weight range based value with 100% persistancy of accuracy
+        /// Weight range based value with 100% persistency of accuracy
         /// </summary>
         PercentValV2 = 21
     }

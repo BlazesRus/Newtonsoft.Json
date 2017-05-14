@@ -35,8 +35,11 @@ using System.Globalization;
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
-
 #endif
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
+
 
 namespace Newtonsoft.Json
 {
@@ -96,6 +99,7 @@ namespace Newtonsoft.Json
                         case JsonToken.Undefined:
                         case JsonToken.Date:
                         case JsonToken.Bytes:
+                        case JsonToken.SmallDec:
                             allStates.Add(valueStates);
                             break;
                         default:
@@ -624,6 +628,10 @@ namespace Newtonsoft.Json
                     {
                         WriteValue((byte[])value);
                     }
+                    break;
+                case JsonToken.SmallDec:
+                    ValidationUtils.ArgumentNotNull(value, nameof(value));
+                    WriteValue((SmallDec)value);
                     break;
                 default:
                     throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(token), token, "Unexpected token type.");
@@ -1596,6 +1604,9 @@ namespace Newtonsoft.Json
                     writer.WriteNull();
                     break;
 #endif
+                case PrimitiveTypeCode.SmallDec:
+                    writer.WriteValue((SmallDec)value);
+                    break;
                 default:
 #if HAVE_ICONVERTIBLE
                     IConvertible convertible = value as IConvertible;
@@ -1665,6 +1676,7 @@ namespace Newtonsoft.Json
                 case JsonToken.Bytes:
                 case JsonToken.Null:
                 case JsonToken.Undefined:
+                case JsonToken.SmallDec:
                     InternalWriteValue(token);
                     break;
                 case JsonToken.EndObject:

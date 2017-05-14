@@ -23,7 +23,7 @@ using System;
 using System.Runtime.CompilerServices;
 using System.IO;
 using System.Globalization;
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
 using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 #if HAVE_BIG_INTEGER
@@ -2244,7 +2244,7 @@ namespace Newtonsoft.Json
                         {
                             //Type SmallDecType = Type.GetType("SmallDec", false);
                             //typeof(SmallDecType) Value = _stringReference.ToString();
-#if (JSON_SharedGlobalCode)
+#if (JSON_SmallDecSupport)
                             numberValue = (SmallDec)Value.ToString();
 #else
                     Type SmallDecType = Type.GetType("SmallDec", true);
