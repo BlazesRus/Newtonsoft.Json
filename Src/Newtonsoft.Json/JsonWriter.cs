@@ -1607,7 +1607,7 @@ namespace Newtonsoft.Json
                 case PrimitiveTypeCode.SmallDec:
                     writer.WriteValue((SmallDec)value);
                     break;
-                default:
+                default://Possible Overflow exception could occur here depending on if converted value has PrimitiveType listed
 #if HAVE_ICONVERTIBLE
                     IConvertible convertible = value as IConvertible;
                     if (convertible != null)
@@ -1617,7 +1617,7 @@ namespace Newtonsoft.Json
 
                         TypeInformation typeInformation = ConvertUtils.GetTypeInformation(convertible);
 
-                        // if convertible has an underlying typecode of Object then attempt to convert it to a string
+                        // if convertible has an underlying TypeCode of Object then attempt to convert it to a string
                         PrimitiveTypeCode resolvedTypeCode = (typeInformation.TypeCode == PrimitiveTypeCode.Object) ? PrimitiveTypeCode.String : typeInformation.TypeCode;
                         Type resolvedType = (typeInformation.TypeCode == PrimitiveTypeCode.Object) ? typeof(string) : typeInformation.Type;
 

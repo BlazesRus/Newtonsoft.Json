@@ -159,7 +159,7 @@ namespace Newtonsoft.Json.Utilities
 #if (JSON_SmallDecSupport)
                 { typeof(SmallDec), PrimitiveTypeCode.SmallDec },
 #else
-                { typeof(SmallDec), PrimitiveTypeCode.SmallDec },
+                //{ typeof(SmallDec), PrimitiveTypeCode.SmallDec },
 #endif
 #if HAVE_ADO_NET
                 { typeof(DBNull), PrimitiveTypeCode.DBNull }
@@ -189,6 +189,9 @@ namespace Newtonsoft.Json.Utilities
             new TypeInformation { Type = typeof(DateTime), TypeCode = PrimitiveTypeCode.DateTime },
             new TypeInformation { Type = typeof(object), TypeCode = PrimitiveTypeCode.Empty }, // no 17 in TypeCode for some reason
             new TypeInformation { Type = typeof(string), TypeCode = PrimitiveTypeCode.String }
+#if (JSON_SmallDecSupport)
+            , new TypeInformation { Type = typeof(SmallDec), TypeCode = PrimitiveTypeCode.SmallDec }
+#endif
         };
 #endif
 
@@ -201,6 +204,20 @@ namespace Newtonsoft.Json.Utilities
         public static PrimitiveTypeCode GetTypeCode(Type t, out bool isEnum)
         {
             PrimitiveTypeCode typeCode;
+            //string DetectedTypeFullname = t.FullName;
+            //if (DetectedTypeFullname == typeof(SmallDec).FullName)
+            //{
+            //    if (t.IsEnum())
+            //    {
+            //        isEnum = true;
+            //        return GetTypeCode(Enum.GetUnderlyingType(t));
+            //    }
+            //    else
+            //    {
+            //        isEnum = false;
+            //    }
+            //    return PrimitiveTypeCode.SmallDec;
+            //}
             if (TypeCodeMap.TryGetValue(t, out typeCode))
             {
                 isEnum = false;
@@ -232,8 +249,17 @@ namespace Newtonsoft.Json.Utilities
 #if HAVE_ICONVERTIBLE
         public static TypeInformation GetTypeInformation(IConvertible convertable)
         {
-            TypeInformation typeInformation = PrimitiveTypeCodes[(int)convertable.GetTypeCode()];
-            return typeInformation;
+            string DetectedTypeFullname = convertable.GetType().FullName;
+            if (DetectedTypeFullname == typeof(SmallDec).FullName)//SmallDec GetTypeCode() can't return Standard Typecode
+            {
+                TypeInformation typeInformation = PrimitiveTypeCodes[(int)PrimitiveTypeCode.SmallDec];
+                return typeInformation;
+            }
+            else
+            {
+                TypeInformation typeInformation = PrimitiveTypeCodes[(int)convertable.GetTypeCode()];
+                return typeInformation;
+            }
         }
 #endif
 
