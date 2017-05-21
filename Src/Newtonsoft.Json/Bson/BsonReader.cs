@@ -31,6 +31,9 @@ using System.IO;
 using Newtonsoft.Json.Serialization;
 using Newtonsoft.Json.Utilities;
 using Newtonsoft.Json.Linq;
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json.Bson
 {
@@ -557,6 +560,10 @@ namespace Newtonsoft.Json.Bson
                 case BsonType.Long:
                     SetToken(JsonToken.Integer, ReadInt64());
                     break;
+                case BsonType.SmallDec:
+                    SmallDec SmallDecObject = ReadSmallDec();
+                    SetToken(JsonToken.SmallDec, SmallDecObject);
+                    break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), "Unexpected BsonType value: " + type);
             }
@@ -824,6 +831,11 @@ namespace Newtonsoft.Json.Bson
         {
             MovePosition(count);
             return _reader.ReadBytes(count);
+        }
+        private SmallDec ReadSmallDec()
+        {
+            MovePosition(8);
+            return (SmallDec) _reader;
         }
     }
 }

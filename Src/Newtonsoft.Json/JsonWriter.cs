@@ -1736,5 +1736,15 @@ namespace Newtonsoft.Json
         {
             AutoComplete(JsonToken.Comment);
         }
+
+        /// <summary>
+        /// Writes a <see cref="SmallDec"/> value.
+        /// </summary>
+        /// <param name="value">The <see cref="SmallDec"/> value to write.</param>
+        [CLSCompliant(false)]
+        public virtual void WriteValue(SmallDec value)
+        {
+            InternalWriteValue(JsonToken.SmallDec);
+        }
     }
 }

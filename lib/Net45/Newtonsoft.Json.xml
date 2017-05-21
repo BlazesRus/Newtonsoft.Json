@@ -1087,6 +1087,18 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.IO.BinaryReader)~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.IO.Stream)~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
+            <summary>
+            
+            </summary>
+            <param name="value"></param>
+        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Abs">
             <summary>
             
@@ -2438,6 +2450,18 @@
             <param name="other"></param>
             <returns></returns>
         </member>
+        <member name="P:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.Error">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.Item(System.String)">
+            <summary>
+            
+            </summary>
+            <param name="columnName"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.InitializeComponent">
             <summary>
             InitializeComponent
@@ -2910,6 +2934,12 @@
             </summary>
             <param name="pattern">The regex pattern.</param>
             <param name="options">The regex options.</param>
+        </member>
+        <member name="M:Newtonsoft.Json.Bson.BsonWriter.WriteValue(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
+            <summary>
+            Writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
         </member>
         <member name="T:Newtonsoft.Json.ConstructorHandling">
             <summary>
@@ -8142,6 +8172,12 @@
             </summary>
             <param name="token">The <see cref="T:Newtonsoft.Json.JsonToken"/> being written.</param>
             <param name="value">The value being written.</param>
+        </member>
+        <member name="M:Newtonsoft.Json.JsonWriter.WriteValue(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
+            <summary>
+            Writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
         </member>
         <member name="T:Newtonsoft.Json.JsonWriterException">
             <summary>

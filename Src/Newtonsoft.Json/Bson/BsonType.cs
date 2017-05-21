@@ -47,5 +47,6 @@ namespace Newtonsoft.Json.Bson
         Long = 18,
         MinKey = -1,
         MaxKey = 127
+        , SmallDec = 19
     }
 }

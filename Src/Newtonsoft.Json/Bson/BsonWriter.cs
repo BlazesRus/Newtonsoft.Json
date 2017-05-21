@@ -34,6 +34,9 @@ using System.Text;
 using Newtonsoft.Json.Utilities;
 using Newtonsoft.Json.Linq;
 using System.Globalization;
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json.Bson
 {
@@ -533,6 +536,17 @@ namespace Newtonsoft.Json.Bson
             // hack to update the writer state
             SetWriteState(JsonToken.Undefined, null);
             AddToken(new BsonRegex(pattern, options));
+        }
+
+        /// <summary>
+        /// Writes a <see cref="SmallDec"/> value.
+        /// </summary>
+        /// <param name="value">The <see cref="SmallDec"/> value to write.</param>
+        [CLSCompliant(false)]
+        public override void WriteValue(SmallDec value)
+        {
+            base.WriteValue(value);
+            AddValue(value, BsonType.SmallDec);
         }
     }
 }
