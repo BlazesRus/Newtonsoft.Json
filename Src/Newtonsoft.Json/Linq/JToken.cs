@@ -2052,6 +2052,19 @@ namespace Newtonsoft.Json.Linq
                     case PrimitiveTypeCode.BigInteger:
                         return ToBigInteger(this);
 #endif
+                    case PrimitiveTypeCode.Object:
+                        //dynamic ValueAsItsType = System.Convert.ChangeType(this, this.GetType(), CultureInfo.InvariantCulture);
+                        //if (ValueAsItsType is IDictionary)
+                        //{
+                        //}
+                        if (this.HasValues)//Potential Dictionary
+                        {
+#if (DEBUG)
+                            Console.WriteLine("Potential Dictionary detected with values "+this.ToString());
+#endif
+
+                        }
+                        break;
                 }
             }
 

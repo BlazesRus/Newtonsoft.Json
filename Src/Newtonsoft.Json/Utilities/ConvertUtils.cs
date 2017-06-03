@@ -91,7 +91,8 @@ namespace Newtonsoft.Json.Utilities
         String = 39,
         Bytes = 40,
         DBNull = 41,
-        SmallDec = 42
+        SmallDec = 42,
+        ObjectDictionary = 43
     }
 
     internal class TypeInformation
@@ -243,6 +244,18 @@ namespace Newtonsoft.Json.Utilities
             }
 
             isEnum = false;
+            if (t.IsArray)//Potential Dictionary
+            {
+#if (DEBUG)
+                Console.WriteLine("Array Object Detected");
+#endif
+            }
+            if (t is IWrappedDictionary)//Potential Dictionary
+            {
+#if (DEBUG)
+                Console.WriteLine("Wrapped Dictionary Detected");
+#endif
+            }
             return PrimitiveTypeCode.Object;
         }
 

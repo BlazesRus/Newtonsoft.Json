@@ -122,6 +122,37 @@
             <param name="provider"></param>
             <returns></returns>
         </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
+            <summary>
+            
+            </summary>
+            <param name="self"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Double)">
+            <summary>
+            
+            </summary>
+            <param name="self"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
+            <summary>
+            Approximate version of Math.Pow(double self, double Value)
+            </summary>
+            <param name="self"></param>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Exp(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
+            <summary>
+            SmallDec version of Math.Exp(double Value)
+            </summary>
+            <param name="Value"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.ToOptimalString">
             <summary>
             Display string with empty decimal places removed
@@ -478,6 +509,16 @@
             <param name="pd"></param>
             <returns></returns>
         </member>
+        <member name="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.AlternativeDecimalStateMode">
+            <summary>
+            Static variable for displaying how alternative decimal states are handles and such
+            (so that other assembly versions of the type can see how to handle conversions)<para/>
+            Default(0): Use  DecBoolStatus to store negative/positive status<para/>
+            (1) : Disable DecBoolStatus and instead use decimalStatus as short to store positive/negative status<para/>
+            (2) : Negative/Positive status stored inside decimalStatus as short with DecBoolStatus used to store additional decimal places when needed <para/>
+            (Extended to maximum 6 decimal places worth stored), and some additional value representations stored such as +/- Infinity<para/>
+            </summary>
+        </member>
         <member name="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.DecBoolStatus">
             <summary>
             0 = Positive;1=Negative;Other states at higher then 1;254 = Positive Infinity;255 = Negative Infinity
@@ -528,37 +569,6 @@
             <param name="OutputValue"></param>
             <returns></returns>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
-            <summary>
-            
-            </summary>
-            <param name="self"></param>
-            <param name="Value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Double)">
-            <summary>
-            
-            </summary>
-            <param name="self"></param>
-            <param name="Value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
-            <summary>
-            Approximate version of Math.Pow(double self, double Value)
-            </summary>
-            <param name="self"></param>
-            <param name="Value"></param>
-            <returns></returns>
-        </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Exp(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
-            <summary>
-            SmallDec version of Math.Exp(double Value)
-            </summary>
-            <param name="Value"></param>
-            <returns></returns>
-        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Max(System.Object,System.Object)">
             <summary>
             Return largest of parameters
@@ -604,6 +614,12 @@
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.GetIntValueAsInt32">
             <summary>
             Return value as signed int 32 value
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.IsNegative">
+            <summary>
+            Method check that returns if represented number is negative
             </summary>
             <returns></returns>
         </member>
@@ -983,14 +999,12 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.ConvertTuple(System.Tuple{System.String,System.Object})">
             <summary>
-            
             </summary>
             <param name="Value"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.DynamicMax(System.Object,System.Object)">
             <summary>
-            
             </summary>
             <param name="LeftSide"></param>
             <param name="RightSide"></param>
@@ -998,7 +1012,6 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.DynamicMin(System.Object,System.Object)">
             <summary>
-            
             </summary>
             <param name="LeftSide"></param>
             <param name="RightSide"></param>
@@ -1006,128 +1019,114 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.CreateList(System.Collections.Generic.List{System.Single})">
             <summary>
-            
+            </summary>
+            <param name="ListValue"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.CreateList(System.Collections.Generic.IReadOnlyList{System.Single})">
+            <summary>
             </summary>
             <param name="ListValue"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.CreateList(System.Collections.Generic.List{System.Int32})">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.CreateList(System.Collections.Generic.List{System.Int64})">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.CreateList(System.Collections.Generic.List{System.Object})">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.CreateList(System.Collections.Generic.List{System.Double})">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.Collections.Generic.List{System.Single})~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.Collections.Generic.List{System.Double})~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.Collections.Generic.List{System.Decimal})~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.Collections.Generic.List{System.Int32})~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.Collections.Generic.List{System.Int64})~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="ListValue"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.Boolean)~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="value"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.AsDouble">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.AsInt">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.IO.BinaryReader)~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="value"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(System.IO.Stream)~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
             <summary>
-            
             </summary>
             <param name="value"></param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Abs">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Abs(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
             <summary>
-            
             </summary>
             <param name="Value"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Floor">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Floor(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Floor(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <param name="precision"></param>
@@ -1135,27 +1134,23 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Ceil">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Ceiling(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Round(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
             <summary>
-            
             </summary>
             <param name="val"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Round(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <param name="Precision"></param>
@@ -1163,7 +1158,6 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.RoundHalfDownValue(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <param name="precision"></param>
@@ -1171,19 +1165,16 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Round">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.RoundToNonZero">
             <summary>
-            
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Round(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32,System.Int32)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <param name="precision"></param>
@@ -1192,7 +1183,6 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Round(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32,System.MidpointRounding)">
             <summary>
-            
             </summary>
             <param name="value"></param>
             <param name="precision"></param>
@@ -2079,6 +2069,12 @@
             <param name="parameter">The converter parameter to use.</param>
             <param name="culture">The culture to use in the converter.</param>
             <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.ValidationOverride.InitializeValidation(System.Windows.FrameworkElement)">
+            <summary>
+            
+            </summary>
+            <param name="SelectedObject"></param>
         </member>
         <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecSlider">
             <summary>
