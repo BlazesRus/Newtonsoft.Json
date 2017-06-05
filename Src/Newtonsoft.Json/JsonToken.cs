@@ -128,16 +128,16 @@ namespace Newtonsoft.Json
         /// </summary>
         SmallDec = 18,
         /// <summary>
-        /// Other unlisted data type
-        /// </summary>
-        Dynamic = 19,
-        /// <summary>
-        /// Other unlisted data type
-        /// </summary>
-        DynamicContainer = 20,
-        /// <summary>
         /// PercentValV2 data
         /// </summary>
-        PercentValV2 = 21
+        PercentValV2 = 19,
+        /// <summary>
+        /// Unknown Object data
+        /// </summary>
+        Object = 20,
+        /// <summary>
+        /// Unknown Object Array data
+        /// </summary>
+        ObjectArray = 21
     }
 }

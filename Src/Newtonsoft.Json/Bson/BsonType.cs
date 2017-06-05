@@ -48,5 +48,6 @@ namespace Newtonsoft.Json.Bson
         MinKey = -1,
         MaxKey = 127
         , SmallDec = 19
+        , PercentValV2 = 20
     }
 }

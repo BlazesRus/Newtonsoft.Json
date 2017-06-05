@@ -31,10 +31,12 @@ using System.Globalization;
 #if HAVE_DYNAMIC
 using System.Dynamic;
 using System.Linq.Expressions;
-using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 #if HAVE_BIG_INTEGER
 using System.Numerics;
+#endif
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
 namespace Newtonsoft.Json.Linq
@@ -193,6 +195,16 @@ namespace Newtonsoft.Json.Linq
         [CLSCompliant(false)]
         public JValue(SmallDec value)
             : this(value, JTokenType.SmallDec)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JValue"/> class with the given value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        [CLSCompliant(false)]
+        public JValue(PercentValV2 value)
+            : this(value, JTokenType.PercentValV2)
         {
         }
 #endif
@@ -1195,16 +1207,25 @@ namespace Newtonsoft.Json.Linq
 
         object IConvertible.ToType(Type conversionType, IFormatProvider provider)
         {
+#if (JSON_SmallDecSupport)
             if (conversionType == typeof(SmallDec))
             {
                 //dynamic changedObj = System.Convert.ChangeType(this, conversionType, provider);
                 return (SmallDec)this.ToString(provider);
             }
+            else if (conversionType == typeof(PercentValV2))
+            {
+                //dynamic changedObj = System.Convert.ChangeType(this, conversionType, provider);
+                return (PercentValV2)this.ToString(provider);
+            }
             else
             {
+#endif
                 return ToObject(conversionType);
+#if (JSON_SmallDecSupport)
             }
-            
+#endif
+
         }
 #endif
     }

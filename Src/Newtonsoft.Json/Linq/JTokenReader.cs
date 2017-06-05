@@ -233,6 +233,14 @@ namespace Newtonsoft.Json.Linq
                 case JTokenType.TimeSpan:
                     SetToken(JsonToken.String, SafeToString(((JValue)token).Value));
                     break;
+#if (JSON_SmallDecSupport)
+                case JTokenType.SmallDec:
+                    SetToken(JsonToken.SmallDec, ((JValue)token).Value);
+                    break;
+                case JTokenType.PercentValV2:
+                    SetToken(JsonToken.PercentValV2, ((JValue)token).Value);
+                    break;
+#endif
                 default:
                     throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(token.Type), token.Type, "Unexpected JTokenType.");
             }

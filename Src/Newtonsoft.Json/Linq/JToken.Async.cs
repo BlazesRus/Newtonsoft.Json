@@ -135,7 +135,6 @@ namespace Newtonsoft.Json.Linq
                     v.SetLineInfo(lineInfo, settings);
                     return v;
                 case JsonToken.SmallDec:
-                case JsonToken.Dynamic:
                 case JsonToken.PercentValV2:
                     try
                     {

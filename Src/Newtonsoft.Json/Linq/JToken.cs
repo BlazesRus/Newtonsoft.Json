@@ -45,6 +45,9 @@ using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Linq;
 
 #endif
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json.Linq
 {
@@ -66,18 +69,20 @@ namespace Newtonsoft.Json.Linq
         private JToken _next;
         private object _annotations;
 
-        private static readonly JTokenType[] BooleanTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean };
+        private static readonly JTokenType[] BooleanTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean
+        , JTokenType.SmallDec , JTokenType.PercentValV2};
         private static readonly JTokenType[] NumberTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean };
 #if HAVE_BIG_INTEGER
         private static readonly JTokenType[] BigIntegerTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean, JTokenType.Bytes };
 #endif
-        private static readonly JTokenType[] StringTypes = new[] { JTokenType.Date, JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Boolean, JTokenType.Bytes, JTokenType.Guid, JTokenType.TimeSpan, JTokenType.Uri };
+        private static readonly JTokenType[] StringTypes = new[] { JTokenType.Date, JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw
+        , JTokenType.Boolean, JTokenType.Bytes, JTokenType.Guid, JTokenType.TimeSpan, JTokenType.Uri , JTokenType.SmallDec , JTokenType.PercentValV2};
         private static readonly JTokenType[] GuidTypes = new[] { JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Guid, JTokenType.Bytes };
         private static readonly JTokenType[] TimeSpanTypes = new[] { JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.TimeSpan };
         private static readonly JTokenType[] UriTypes = new[] { JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Uri };
-        private static readonly JTokenType[] CharTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw };
+        private static readonly JTokenType[] CharTypes = new[] { JTokenType.Integer, JTokenType.Float, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.SmallDec, JTokenType.PercentValV2 };
         private static readonly JTokenType[] DateTimeTypes = new[] { JTokenType.Date, JTokenType.String, JTokenType.Comment, JTokenType.Raw };
-        private static readonly JTokenType[] BytesTypes = new[] { JTokenType.Bytes, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Integer };
+        private static readonly JTokenType[] BytesTypes = new[] { JTokenType.Bytes, JTokenType.String, JTokenType.Comment, JTokenType.Raw, JTokenType.Integer, JTokenType.SmallDec, JTokenType.PercentValV2 };
 
         /// <summary>
         /// Gets a comparer that can compare two tokens for value equality.
@@ -2053,18 +2058,15 @@ namespace Newtonsoft.Json.Linq
                         return ToBigInteger(this);
 #endif
                     case PrimitiveTypeCode.Object:
-                        //dynamic ValueAsItsType = System.Convert.ChangeType(this, this.GetType(), CultureInfo.InvariantCulture);
-                        //if (ValueAsItsType is IDictionary)
-                        //{
-                        //}
-                        if (this.HasValues)//Potential Dictionary
-                        {
-#if (DEBUG)
-                            Console.WriteLine("Potential Dictionary detected with values "+this.ToString());
-#endif
-
-                        }
                         break;
+                    case PrimitiveTypeCode.ObjectArray:
+                        break;
+#if (JSON_SmallDecSupport)
+                    case PrimitiveTypeCode.SmallDec:
+                        return (SmallDec)this;
+                    case PrimitiveTypeCode.PercentValV2:
+                        return (PercentValV2)this;
+#endif
                 }
             }
 
@@ -2718,5 +2720,62 @@ namespace Newtonsoft.Json.Linq
                 }
             }
         }
+
+#if (JSON_SmallDecSupport)
+        /// <summary>
+        /// Performs an explicit conversion from <see cref="Newtonsoft.Json.Linq.JToken"/> to <see cref="CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/>.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The result of the conversion.</returns>
+        [CLSCompliant(false)]
+        public static explicit operator SmallDec(JToken value)
+        {
+            JValue v = EnsureValue(value);
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+            {
+                throw new ArgumentException("Can not convert {0} to SmallDec.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            }
+            return Convert.ToString(v.Value, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Performs an explicit conversion from <see cref="Newtonsoft.Json.Linq.JToken"/> to <see cref="CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2"/>.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>The result of the conversion.</returns>
+        [CLSCompliant(false)]
+        public static explicit operator PercentValV2(JToken value)
+        {
+            JValue v = EnsureValue(value);
+            if (v == null || !ValidateToken(v, NumberTypes, false))
+            {
+                throw new ArgumentException("Can not convert {0} to PercentValV2.".FormatWith(CultureInfo.InvariantCulture, GetType(value)));
+            }
+            return (PercentValV2) Convert.ToString(v.Value, CultureInfo.InvariantCulture);
+        }
+
+        /// <summary>
+        /// Performs an implicit conversion from <see cref="CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> to <see cref="JToken"/>.
+        /// </summary>
+        /// <param name="value">The value to create a <see cref="JValue"/> from.</param>
+        /// <returns>The <see cref="JValue"/> initialized with the specified value.</returns>
+        [CLSCompliant(false)]
+        public static explicit operator JToken(SmallDec value)
+        {
+            return new JValue(value);
+        }
+
+        /// <summary>
+        /// Performs an explicit conversion from <see cref="CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2"/> to <see cref="JToken"/>.
+        /// </summary>
+        /// <param name="value">The value to create a <see cref="JValue"/> from.</param>
+        /// <returns>The <see cref="JValue"/> initialized with the specified value.</returns>
+        [CLSCompliant(false)]
+        public static explicit operator JToken(PercentValV2 value)
+        {
+            return new JValue(value);
+        }
+
+#endif
     }
 }

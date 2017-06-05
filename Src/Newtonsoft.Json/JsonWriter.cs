@@ -1604,9 +1604,14 @@ namespace Newtonsoft.Json
                     writer.WriteNull();
                     break;
 #endif
+#if (JSON_SmallDecSupport)
                 case PrimitiveTypeCode.SmallDec:
                     writer.WriteValue((SmallDec)value);
                     break;
+                case PrimitiveTypeCode.PercentValV2:
+                    writer.WriteValue((PercentValV2)value);
+                    break;
+#endif
                 default://Possible Overflow exception could occur here depending on if converted value has PrimitiveType listed
 #if HAVE_ICONVERTIBLE
                     IConvertible convertible = value as IConvertible;
@@ -1677,6 +1682,7 @@ namespace Newtonsoft.Json
                 case JsonToken.Null:
                 case JsonToken.Undefined:
                 case JsonToken.SmallDec:
+                case JsonToken.PercentValV2:
                     InternalWriteValue(token);
                     break;
                 case JsonToken.EndObject:
@@ -1737,6 +1743,7 @@ namespace Newtonsoft.Json
             AutoComplete(JsonToken.Comment);
         }
 
+#if (JSON_SmallDecSupport)
         /// <summary>
         /// Writes a <see cref="SmallDec"/> value.
         /// </summary>
@@ -1746,5 +1753,16 @@ namespace Newtonsoft.Json
         {
             InternalWriteValue(JsonToken.SmallDec);
         }
+
+        /// <summary>
+        /// Writes a <see cref="SmallDec"/> value.
+        /// </summary>
+        /// <param name="value">The <see cref="SmallDec"/> value to write.</param>
+        [CLSCompliant(false)]
+        public virtual void WriteValue(PercentValV2 value)
+        {
+            InternalWriteValue(JsonToken.PercentValV2);
+        }
+#endif
     }
 }

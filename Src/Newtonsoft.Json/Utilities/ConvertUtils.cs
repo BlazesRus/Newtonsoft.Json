@@ -92,7 +92,8 @@ namespace Newtonsoft.Json.Utilities
         Bytes = 40,
         DBNull = 41,
         SmallDec = 42,
-        ObjectDictionary = 43
+        PercentValV2 = 43,
+        ObjectArray = 44
     }
 
     internal class TypeInformation
@@ -159,8 +160,7 @@ namespace Newtonsoft.Json.Utilities
                 { typeof(byte[]), PrimitiveTypeCode.Bytes },
 #if (JSON_SmallDecSupport)
                 { typeof(SmallDec), PrimitiveTypeCode.SmallDec },
-#else
-                //{ typeof(SmallDec), PrimitiveTypeCode.SmallDec },
+                { typeof(PercentValV2), PrimitiveTypeCode.PercentValV2 },
 #endif
 #if HAVE_ADO_NET
                 { typeof(DBNull), PrimitiveTypeCode.DBNull }
@@ -192,7 +192,9 @@ namespace Newtonsoft.Json.Utilities
             new TypeInformation { Type = typeof(string), TypeCode = PrimitiveTypeCode.String }
 #if (JSON_SmallDecSupport)
             , new TypeInformation { Type = typeof(SmallDec), TypeCode = PrimitiveTypeCode.SmallDec }
+            , new TypeInformation { Type = typeof(PercentValV2), TypeCode = PrimitiveTypeCode.PercentValV2 },
 #endif
+            new TypeInformation { Type = typeof(object), TypeCode = PrimitiveTypeCode.ObjectArray }
         };
 #endif
 
@@ -205,20 +207,6 @@ namespace Newtonsoft.Json.Utilities
         public static PrimitiveTypeCode GetTypeCode(Type t, out bool isEnum)
         {
             PrimitiveTypeCode typeCode;
-            //string DetectedTypeFullname = t.FullName;
-            //if (DetectedTypeFullname == typeof(SmallDec).FullName)
-            //{
-            //    if (t.IsEnum())
-            //    {
-            //        isEnum = true;
-            //        return GetTypeCode(Enum.GetUnderlyingType(t));
-            //    }
-            //    else
-            //    {
-            //        isEnum = false;
-            //    }
-            //    return PrimitiveTypeCode.SmallDec;
-            //}
             if (TypeCodeMap.TryGetValue(t, out typeCode))
             {
                 isEnum = false;
@@ -244,18 +232,19 @@ namespace Newtonsoft.Json.Utilities
             }
 
             isEnum = false;
-            if (t.IsArray)//Potential Dictionary
-            {
-#if (DEBUG)
-                Console.WriteLine("Array Object Detected");
-#endif
-            }
-            if (t is IWrappedDictionary)//Potential Dictionary
-            {
-#if (DEBUG)
-                Console.WriteLine("Wrapped Dictionary Detected");
-#endif
-            }
+//            if (t.IsArray)//Potential Dictionary
+//            {
+//#if (DEBUG)
+//                Console.WriteLine("Array Object Detected");
+//#endif
+//                return PrimitiveTypeCode.ObjectArray;
+//            }
+//            if (t is IWrappedDictionary)//Potential Dictionary
+//            {
+//#if (DEBUG)
+//                Console.WriteLine("Wrapped Dictionary Detected");
+//#endif
+//            }
             return PrimitiveTypeCode.Object;
         }
 

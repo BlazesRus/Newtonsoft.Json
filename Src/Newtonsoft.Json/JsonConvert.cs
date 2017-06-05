@@ -539,10 +539,38 @@ namespace Newtonsoft.Json
                     }
                     catch (Exception ex)
                     {
-                        System.Console.WriteLine("Exception called from JConvert->ToString() of type " + ex.ToString());
-                        throw;
+                        System.Console.WriteLine("Exception called from SmallDec to string JConvert of type " + ex.ToString());
                     }
-                    //return ToString((SmallDec)value);
+                    break;
+                //return ToString((SmallDec)value);
+                case PrimitiveTypeCode.Object:
+#if (DEBUG)
+                    //Console.WriteLine("Attempting to JConvert from Object of type " + value.GetType().FullName+" to string.");
+#endif
+                    try
+                    {
+                        dynamic changedObj = Convert.ChangeType(value, value.GetType(), CultureInfo.CurrentCulture);
+                        return changedObj.ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception called from Object to string JConvert of type " + ex.ToString());
+                    }
+                    break;
+                case PrimitiveTypeCode.ObjectArray:
+#if (DEBUG)
+                    //Console.WriteLine("Attempting to JConvert from ObjectArray of type " + value.GetType().FullName + " to string.");
+#endif
+                    try
+                    {
+                        dynamic changedObj = Convert.ChangeType(value, value.GetType(), CultureInfo.CurrentCulture);
+                        return changedObj.ToString();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Console.WriteLine("Exception called from Object to string JConvert of type " + ex.ToString());
+                    }
+                    break;
             }
 
             throw new ArgumentException("Unsupported type: {0}. Use the JsonSerializer class to get the object's JSON representation.".FormatWith(CultureInfo.InvariantCulture, value.GetType()));

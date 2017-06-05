@@ -79,9 +79,24 @@ namespace Newtonsoft.Json.Schema
         /// </summary>
         Null = 64,
 
+#if (JSON_SmallDecSupport)
+        /// <summary>
+        /// SmallDec type.
+        /// </summary>
+        SmallDec = 128,
+
+        /// <summary>
+        /// Null type.
+        /// </summary>
+        PercentValV2 = 256,
+#endif
+
         /// <summary>
         /// Any type.
         /// </summary>
         Any = String | Float | Integer | Boolean | Object | Array | Null
+#if (JSON_SmallDecSupport)
+        | SmallDec | PercentValV2
+#endif
     }
 }

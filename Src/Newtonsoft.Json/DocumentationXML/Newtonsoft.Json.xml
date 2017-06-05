@@ -207,7 +207,7 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.op_Explicit(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)~System.Double">
             <summary>
-            
+            SmallDec to double explicit conversion
             </summary>
             <param name="self"></param>
         </member>
@@ -1102,6 +1102,13 @@
             <summary>
             </summary>
             <param name="value"></param>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.ConvertToFloatList(System.Collections.Generic.List{CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec})">
+            <summary>
+            Convert from List(SmallDec) to List(float)
+            </summary>
+            <param name="ListValue"></param>
+            <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Abs">
             <summary>
@@ -2268,14 +2275,16 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.SetProperty``1(``0@,``0,System.Action,System.Action{``0},System.String)">
             <summary>
-            Sets <paramref name="backingStore"/> to <paramref name="value"/> and
-            raises <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanging"/> before and <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanged"/>
-            after setting the value.
+            Sets <paramref name="backingStore"/> to <paramref name="value"/> and raises 
+            <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanging"/> before and <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanged"/> after setting the value.
             </summary>
             <param name="backingStore">Target variable</param>
             <param name="value">Source variable</param>
             <param name="onChanged">Called after changing the value but before raising <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanged"/>.</param>
-            <param name="onChanging">Called before changing the value and before raising <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanging"/> with <paramref name="value"/> as parameter.</param>
+            <param name="onChanging">
+            Called before changing the value and before raising <see cref="E:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.PropertyChanging"/> with
+            <paramref name="value"/> as parameter.
+            </param>
             <param name="propertyName">Name of the changed property</param>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.OnPropertyChanged(System.String)">
@@ -2286,8 +2295,8 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.SafeMemberwiseClone">
             <summary>
-            Equivalent to <c>o.MemberwiseClone()</c> except that events are set to null.
-            Override if your subclass has events or if you need to re-register handlers.
+            Equivalent to <c>o.MemberwiseClone()</c> except that events are set to null. Override if
+            your subclass has events or if you need to re-register handlers.
             </summary>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToString">
@@ -2308,111 +2317,96 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.GetTypeCode">
             <summary>
-             Returns the TypeCode for Value instance.
+            Returns the TypeCode for Value instance.
             </summary>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToBoolean(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToChar(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToSByte(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToByte(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToInt16(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToUInt16(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToInt32(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToUInt32(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToInt64(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToUInt64(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToSingle(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToDouble(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToDecimal(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToDateTime(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToType(System.Type,System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="conversionType"></param>
             <param name="provider"></param>
@@ -2420,42 +2414,42 @@
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToString(System.Globalization.CultureInfo)">
             <summary>
-            
             </summary>
             <param name="culture"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToString(System.Globalization.NumberFormatInfo)">
             <summary>
-            
             </summary>
             <param name="numberFormat"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.ToString(System.IFormatProvider)">
             <summary>
-            
             </summary>
             <param name="provider"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.Equals(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
             <summary>
-            
             </summary>
             <param name="other"></param>
             <returns></returns>
         </member>
         <member name="P:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.Error">
             <summary>
-            
             </summary>
         </member>
         <member name="P:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.Item(System.String)">
             <summary>
-            
             </summary>
             <param name="columnName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.OnInitialized(System.EventArgs)">
+            <summary>
+            </summary>
+            <param name="e"></param>
             <returns></returns>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDecUpdown.InitializeComponent">

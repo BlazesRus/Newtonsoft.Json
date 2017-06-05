@@ -860,7 +860,6 @@ namespace Newtonsoft.Json.Linq
                         parent = property;
                         break;
                     case JsonToken.SmallDec:
-                    case JsonToken.Dynamic:
                     case JsonToken.PercentValV2:
                         try
                         {

@@ -47,8 +47,9 @@ namespace Newtonsoft.Json
         ReadAsDouble,
         ReadAsBoolean,
         ReadAsSmallDec,
-        ReadAsDynamic,
-        ReadAsPercentValV2
+        ReadAsPercentValV2,
+        ReadAsObject,
+        ReadAsObjectArray
     }
 
     /// <summary>
@@ -188,10 +189,6 @@ namespace Newtonsoft.Json
 
                 case ReadType.ReadAsSmallDec:
                     //SetToken(JsonToken.SmallDec, (SmallDec)_stringReference.ToString(), false);
-                    break;
-
-                case ReadType.ReadAsDynamic:
-                    // SetToken(JsonToken.Dynamic, (dynamic)_stringReference.ToString(), false);
                     break;
 
                 case ReadType.ReadAsPercentValV2:
@@ -2644,6 +2641,11 @@ namespace Newtonsoft.Json
                     case ReadType.ReadAsString:
                         SetToken(JsonToken.String, JsonConvert.NegativeInfinity);
                         return JsonConvert.NegativeInfinity;
+#if (JSON_SmallDecSupport)
+                    case ReadType.ReadAsSmallDec:
+                        SetToken(JsonToken.SmallDec, SmallDec.NegativeInfinity);
+                        return SmallDec.NegativeInfinity;
+#endif
                 }
 
                 throw JsonReaderException.Create(this, "Cannot read -Infinity value.");
@@ -2675,6 +2677,11 @@ namespace Newtonsoft.Json
                     case ReadType.ReadAsString:
                         SetToken(JsonToken.String, JsonConvert.PositiveInfinity);
                         return JsonConvert.PositiveInfinity;
+#if (JSON_SmallDecSupport)
+                    case ReadType.ReadAsSmallDec:
+                        SetToken(JsonToken.SmallDec, SmallDec.PositiveInfinity);
+                        return SmallDec.PositiveInfinity;
+#endif
                 }
 
                 throw JsonReaderException.Create(this, "Cannot read Infinity value.");
@@ -2706,6 +2713,11 @@ namespace Newtonsoft.Json
                     case ReadType.ReadAsString:
                         SetToken(JsonToken.String, JsonConvert.NaN);
                         return JsonConvert.NaN;
+#if (JSON_SmallDecSupport)
+                    case ReadType.ReadAsSmallDec:
+                        SetToken(JsonToken.SmallDec, SmallDec.NaN);
+                        return SmallDec.NaN;
+#endif
                 }
 
                 throw JsonReaderException.Create(this, "Cannot read NaN value.");
@@ -2715,9 +2727,9 @@ namespace Newtonsoft.Json
         }
 
         /// <summary>
-        /// Changes the reader's state to <see cref="JsonReader.State.Closed"/>. If <see
-        /// cref="JsonReader.CloseInput"/> is set to <c>true</c>, the underlying <see
-        /// cref="TextReader"/> is also closed.
+        /// Changes the reader's state to <see cref="JsonReader.State.Closed"/>. 
+        /// If <see cref="JsonReader.CloseInput"/> is set to <c>true</c>, 
+        /// the underlying <see cref="TextReader"/> is also closed.
         /// </summary>
         public override void Close()
         {
@@ -2745,8 +2757,8 @@ namespace Newtonsoft.Json
         /// Gets a value indicating whether the class can return line information.
         /// </summary>
         /// <returns>
-        /// <c>true</c> if <see cref="JsonTextReader.LineNumber"/> and <see
-        /// cref="JsonTextReader.LinePosition"/> can be provided; otherwise, <c>false</c>.
+        /// <c>true</c> if <see cref="JsonTextReader.LineNumber"/> and 
+        /// <see cref="JsonTextReader.LinePosition"/> can be provided; otherwise, <c>false</c>.
         /// </returns>
         public bool HasLineInfo()
         {
@@ -2757,8 +2769,8 @@ namespace Newtonsoft.Json
         /// Gets the current line number.
         /// </summary>
         /// <value>
-        /// The current line number or 0 if no line information is available (for example, <see
-        /// cref="JsonTextReader.HasLineInfo"/> returns <c>false</c>).
+        /// The current line number or 0 if no line information is available (for example, 
+        /// <see cref="JsonTextReader.HasLineInfo"/> returns <c>false</c>).
         /// </value>
         public int LineNumber
         {
@@ -2777,8 +2789,8 @@ namespace Newtonsoft.Json
         /// Gets the current line position.
         /// </summary>
         /// <value>
-        /// The current line position or 0 if no line information is available (for example, <see
-        /// cref="JsonTextReader.HasLineInfo"/> returns <c>false</c>).
+        /// The current line position or 0 if no line information is available (for example, 
+        /// <see cref="JsonTextReader.HasLineInfo"/> returns <c>false</c>).
         /// </value>
         public int LinePosition
         {

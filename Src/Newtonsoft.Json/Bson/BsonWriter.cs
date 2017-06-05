@@ -538,6 +538,7 @@ namespace Newtonsoft.Json.Bson
             AddToken(new BsonRegex(pattern, options));
         }
 
+#if (JSON_SmallDecSupport)
         /// <summary>
         /// Writes a <see cref="SmallDec"/> value.
         /// </summary>
@@ -548,5 +549,17 @@ namespace Newtonsoft.Json.Bson
             base.WriteValue(value);
             AddValue(value, BsonType.SmallDec);
         }
+
+        /// <summary>
+        /// Writes a <see cref="PercentValV2"/> value.
+        /// </summary>
+        /// <param name="value">The <see cref="PercentValV2"/> value to write.</param>
+        [CLSCompliant(false)]
+        public override void WriteValue(PercentValV2 value)
+        {
+            base.WriteValue(value);
+            AddValue(value, BsonType.PercentValV2);
+        }
+#endif
     }
 }

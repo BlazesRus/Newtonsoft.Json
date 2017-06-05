@@ -124,16 +124,8 @@ namespace Newtonsoft.Json.Linq
         /// </summary>
         SmallDec = 18,
         /// <summary>
-        /// 
+        /// Weight range based value with 100% persistence of accuracy
         /// </summary>
-        Dynamic = 19,
-        /// <summary>
-        /// 
-        /// </summary>
-        DynamicContainer = 20,
-        /// <summary>
-        /// Weight range based value with 100% persistency of accuracy
-        /// </summary>
-        PercentValV2 = 21
+        PercentValV2 = 19
     }
 }

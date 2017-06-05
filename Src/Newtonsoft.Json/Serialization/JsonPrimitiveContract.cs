@@ -52,9 +52,30 @@ namespace Newtonsoft.Json.Serialization
             IsReadOnlyOrFixedSize = true;
 
             ReadType readType;
-            if (ReadTypeMap.TryGetValue(NonNullableUnderlyingType, out readType))
+            try
             {
-                InternalReadType = readType;
+                if(ReadTypeMap.TryGetValue(NonNullableUnderlyingType, out readType))
+                {
+                    InternalReadType = readType;
+                }
+            }
+            catch
+            {
+#if (DEBUG)
+                //Console.WriteLine("JsonPrimitiveContract ReadTypeMap read failed with underlyingType of "+underlyingType.FullName+" and TypeCode of "+ TypeCode.ToString());
+#endif
+                if(TypeCode== PrimitiveTypeCode.Object)
+                {
+                    InternalReadType = ReadType.ReadAsObject;
+                }
+                else if(TypeCode==PrimitiveTypeCode.ObjectArray)
+                {
+                    InternalReadType = ReadType.ReadAsObjectArray;
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
 

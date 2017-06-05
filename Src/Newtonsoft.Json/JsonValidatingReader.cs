@@ -638,10 +638,76 @@ namespace Newtonsoft.Json
                 case JsonToken.None:
                     // no content, do nothing
                     break;
+#if (JSON_SmallDecSupport)
+                case JsonToken.SmallDec:
+                    ProcessValue();
+                    WriteToken(CurrentMemberSchemas);
+                    foreach (JsonSchemaModel schema in CurrentMemberSchemas)
+                    {
+                        ValidateSmallDec(schema);
+                    }
+                    break;
+                case JsonToken.PercentValV2:
+                    ProcessValue();
+                    WriteToken(CurrentMemberSchemas);
+                    foreach (JsonSchemaModel schema in CurrentMemberSchemas)
+                    {
+                        ValidatePercentValV2(schema);
+                    }
+                    break;
+#endif
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
+
+#if (JSON_SmallDecSupport)
+        private void ValidatePercentValV2(JsonSchemaModel schema)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void ValidateSmallDec(JsonSchemaModel schema)
+        {
+            if (schema == null)
+            {
+                return;
+            }
+
+            if (!TestType(schema, JsonSchemaType.SmallDec))
+            {
+                return;
+            }
+
+            ValidateNotDisallowed(schema);
+
+            object value = _reader.Value;
+
+            if (schema.Maximum != null)
+            {
+                if (JValue.Compare(JTokenType.SmallDec, value, schema.Maximum) > 0)
+                {
+                    RaiseError("SmallDec {0} exceeds maximum value of {1}.".FormatWith(CultureInfo.InvariantCulture, value, schema.Maximum), schema);
+                }
+                if (schema.ExclusiveMaximum && JValue.Compare(JTokenType.SmallDec, value, schema.Maximum) == 0)
+                {
+                    RaiseError("SmallDec {0} equals maximum value of {1} and exclusive maximum is true.".FormatWith(CultureInfo.InvariantCulture, value, schema.Maximum), schema);
+                }
+            }
+
+            if (schema.Minimum != null)
+            {
+                if (JValue.Compare(JTokenType.SmallDec, value, schema.Minimum) < 0)
+                {
+                    RaiseError("SmallDec {0} is less than minimum value of {1}.".FormatWith(CultureInfo.InvariantCulture, value, schema.Minimum), schema);
+                }
+                if (schema.ExclusiveMinimum && JValue.Compare(JTokenType.SmallDec, value, schema.Minimum) == 0)
+                {
+                    RaiseError("SmallDec {0} equals minimum value of {1} and exclusive minimum is true.".FormatWith(CultureInfo.InvariantCulture, value, schema.Minimum), schema);
+                }
+            }
+        }
+#endif
 
         private void WriteToken(IList<JsonSchemaModel> schemas)
         {
