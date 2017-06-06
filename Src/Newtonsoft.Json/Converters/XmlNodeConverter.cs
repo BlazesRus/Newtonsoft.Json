@@ -1818,7 +1818,6 @@ namespace Newtonsoft.Json.Converters
                     manager.RemoveNamespace(string.Empty, manager.DefaultNamespace);
                     break;
                 case JsonToken.SmallDec:
-                case JsonToken.Dynamic:
                 case JsonToken.PercentValV2:
                 try
                 {
