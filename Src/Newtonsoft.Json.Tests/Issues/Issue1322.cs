@@ -23,47 +23,39 @@
 // OTHER DEALINGS IN THE SOFTWARE.
 #endregion
 
-#if HAVE_BENCHMARKS
-
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.Xml.Linq;
-using BenchmarkDotNet.Attributes;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+#if DNXCORE50
+using Xunit;
+using Test = Xunit.FactAttribute;
+using Assert = Newtonsoft.Json.Tests.XUnitAssert;
+#else
+using NUnit.Framework;
+#endif
 
-namespace Newtonsoft.Json.Tests.Benchmarks
+namespace Newtonsoft.Json.Tests.Issues
 {
-    public class XmlNodeConverterBenchmarks
+    [TestFixture]
+    public class Issue1322 : TestFixtureBase
     {
-        [Benchmark]
-        public void ConvertXmlNode()
+        [Test]
+        public void Test()
         {
-            XmlDocument doc = new XmlDocument();
-            using (FileStream file = System.IO.File.OpenRead(TestFixtureBase.ResolvePath("large_sample.xml")))
+            IList<KeyValuePair<string, string>> values = new List<KeyValuePair<string, string>>
             {
-                doc.Load(file);
-            }
+                new KeyValuePair<string, string>("123", "2017-05-19T11:00:59")
+            };
 
-            JsonConvert.SerializeXmlNode(doc);
-        }
+            string json = JsonConvert.SerializeObject(values, Formatting.Indented);
 
-        [Benchmark]
-        public void ConvertXNode()
-        {
-            XDocument doc;
-            using (FileStream file = System.IO.File.OpenRead(TestFixtureBase.ResolvePath("large_sample.xml")))
-            {
-                doc = XDocument.Load(file);
-            }
+            IList<KeyValuePair<string, string>> v1 = JsonConvert.DeserializeObject<IList<KeyValuePair<string, string>>>(json);
 
-            JsonConvert.SerializeXNode(doc);
+            Assert.AreEqual("123", v1[0].Key);
+            Assert.AreEqual("2017-05-19T11:00:59", v1[0].Value);
         }
     }
 }
-
-#endif
