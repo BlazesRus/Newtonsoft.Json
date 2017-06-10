@@ -857,19 +857,58 @@ namespace Newtonsoft.Json
         /// <returns>The deserialized object from the JSON string.</returns>
         public static object DeserializeObject(string value, Type type, JsonSerializerSettings settings)
         {
-            ValidationUtils.ArgumentNotNull(value, nameof(value));
-
-            JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
-
-            // by default DeserializeObject should check for additional content
-            if (!jsonSerializer.IsCheckAdditionalContentSet())
+            //Need to fix Unable to find a constructor to use for type 
+            //System.Collections.Generic.Dictionary`2[System.Int32,System.Boolean]. Path 'groups.509.oo', line 1, position 49683. exception
+            try
             {
-                jsonSerializer.CheckAdditionalContent = true;
+                ValidationUtils.ArgumentNotNull(value, nameof(value));
+
+                JsonSerializer jsonSerializer = JsonSerializer.CreateDefault(settings);
+
+                // by default DeserializeObject should check for additional content
+                if (!jsonSerializer.IsCheckAdditionalContentSet())
+                {
+                    jsonSerializer.CheckAdditionalContent = true;
+                }
+
+                using (JsonTextReader reader = new JsonTextReader(new StringReader(value)))
+                {
+                    return jsonSerializer.Deserialize(reader, type);
+                }
             }
-
-            using (JsonTextReader reader = new JsonTextReader(new StringReader(value)))
+#pragma warning disable CC0004 // Catch block cannot be empty
+            catch
+#if(DEBUG) 
+            (System.Exception ex)
+#endif
             {
-                return jsonSerializer.Deserialize(reader, type);
+#if (DEBUG)
+                Console.WriteLine("JsonConvert Deserialization of object failed with exception of "+ex.ToString());
+#endif
+#if (JSON_SmallDecSupport)
+                if (type==typeof(SmallDec))
+                {
+                    return (SmallDec)value;
+                }
+#endif
+#if (!JSON_SmallDecSupport)
+                if (type.IsValueType)
+#else
+                else if (type.IsValueType)
+#endif
+                {
+
+                }
+
+            }
+#pragma warning restore CC0004 // Catch block cannot be empty
+            if (type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            else
+            {
+                return null;
             }
         }
 #endregion

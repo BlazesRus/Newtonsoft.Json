@@ -12,13 +12,13 @@
     <AssemblyName>CustomNewtonsoft.Json</AssemblyName>
     <OutputPath>..\..\lib\Net45\</OutputPath>
     <Prefer32Bit>false</Prefer32Bit>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <RunCodeAnalysis>true</RunCodeAnalysis>
     <ErrorReport>prompt</ErrorReport>
     <CodeAnalysisRuleSet>Newtonsoft.Json.ruleset</CodeAnalysisRuleSet>
     <DocumentationFile>DocumentationXML\Newtonsoft.Json.xml</DocumentationFile>
-    <OutputPath>..\..\lib\Net45\</OutputPath>
+    <OutputPath>..\..\lib\Net46\</OutputPath>
     <ErrorReport>prompt</ErrorReport>
     <DefineConstants>HAVE_ADO_NET;HAVE_APP_DOMAIN;HAVE_ASYNC;HAVE_BIG_INTEGER;HAVE_BINARY_FORMATTER;HAVE_BINARY_SERIALIZATION;HAVE_BINARY_EXCEPTION_SERIALIZATION;HAVE_CAS;HAVE_CHAR_TO_LOWER_WITH_CULTURE;HAVE_CHAR_TO_STRING_WITH_CULTURE;HAVE_COM_ATTRIBUTES;HAVE_COMPONENT_MODEL;HAVE_CONCURRENT_COLLECTIONS;HAVE_COVARIANT_GENERICS;HAVE_DATA_CONTRACTS;HAVE_DATE_TIME_OFFSET;HAVE_DB_NULL_TYPE_CODE;HAVE_DYNAMIC;HAVE_EMPTY_TYPES;HAVE_ENTITY_FRAMEWORK;HAVE_EXPRESSIONS;HAVE_FSHARP_TYPES;HAVE_FULL_REFLECTION;HAVE_GUID_TRY_PARSE;HAVE_HASH_SET;HAVE_ICLONEABLE;HAVE_ICONVERTIBLE;HAVE_IGNORE_DATA_MEMBER_ATTRIBUTE;HAVE_IMMUTABLE_COLLECTIONS;HAVE_INOTIFY_COLLECTION_CHANGED;HAVE_INOTIFY_PROPERTY_CHANGING;HAVE_ISET;HAVE_LINQ;HAVE_MEMORY_BARRIER;HAVE_METHOD_IMPL_ATTRIBUTE;HAVE_NON_SERIALIZED_ATTRIBUTE;HAVE_READ_ONLY_COLLECTIONS;HAVE_REFLECTION_EMIT;HAVE_SECURITY_SAFE_CRITICAL_ATTRIBUTE;HAVE_SERIALIZATION_BINDER_BIND_TO_NAME;HAVE_STREAM_READER_WRITER_CLOSE;HAVE_STRING_JOIN_WITH_ENUMERABLE;HAVE_TIME_SPAN_PARSE_WITH_CULTURE;HAVE_TIME_SPAN_TO_STRING_WITH_CULTURE;HAVE_TIME_ZONE_INFO;HAVE_TRACE_WRITER;HAVE_TYPE_DESCRIPTOR;HAVE_UNICODE_SURROGATE_DETECTION;HAVE_VARIANT_TYPE_PARAMETERS;HAVE_VERSION_TRY_PARSE;HAVE_XLINQ;HAVE_XML_DOCUMENT;HAVE_XML_DOCUMENT_TYPE</DefineConstants>
   </PropertyGroup>
@@ -30,7 +30,7 @@
     <PlatformTarget>x64</PlatformTarget>
   </PropertyGroup>
   <Choose>
-    <When Condition="$(Configuration.Contains('Debug')) ">
+    <When Condition="$(Configuration.Contains('Debug'))">
       <PropertyGroup Label="DefaultDebugOptions">
         <DebugSymbols>true</DebugSymbols>
         <DebugType>full</DebugType>
@@ -40,7 +40,7 @@
       </PropertyGroup>
     </When>
     <Otherwise>
-      <PropertyGroup Label="DefaultReleaseOptions">
+      <PropertyGroup Label="DefaultReleaseOptions" Condition=" $(Configuration.Contains('Release')) ">
         <DebugType>None</DebugType>
         <Optimize>true</Optimize>
         <WarningLevel>4</WarningLevel>
@@ -48,32 +48,32 @@
       </PropertyGroup>
     </Otherwise>
   </Choose>
-  <PropertyGroup Label="AdditionalConstants#1">
+  <PropertyGroup Label="GlobalCodeSupport" Condition=" $(Configuration.Contains('Legacy')) ">
     <DefineConstants>$(DefineConstants);JSON_SmallDecSupport;BlazesGlobalCode_Disable128BitFeatures;BlazesGlobalCode_RestrictConversionBetweenSuperDec;TRACE;CODE_ANALYSIS;$(AdditionalConstants)</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <IntermediateOutputPath>obj\Debug\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\Debug\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <IntermediateOutputPath>obj\Release\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\Release\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <IntermediateOutputPath>obj\Debugx64\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\Debugx64\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <IntermediateOutputPath>obj\LegacyReleasex64\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\LegacyReleasex64\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'LegacyDebug|AnyCPU' ">
-    <IntermediateOutputPath>obj\LegacyDebug\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\LegacyDebug\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'LegacyRelease|AnyCPU' ">
-    <IntermediateOutputPath>obj\LegacyRelease\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\LegacyRelease\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LegacyDebug|x64'">
-    <IntermediateOutputPath>obj\LegacyDebugx64\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\LegacyDebugx64\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'LegacyRelease|x64'">
-    <IntermediateOutputPath>obj\LegacyReleasex64\Net45\</IntermediateOutputPath>
+    <IntermediateOutputPath>obj\LegacyReleasex64\Net46\</IntermediateOutputPath>
   </PropertyGroup>
   <ItemGroup>
     <!--Using mostly same references that PoESkillTree uses to prevent conflicts on method usage(and hopefully avoid some exceptions-->

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>CustomNewtonsoft.Json</name>
+        <name>CustomNewtonsoftx64.Json</name>
     </assembly>
     <members>
         <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
@@ -649,6 +649,28 @@
             
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.PositiveInfinityValue">
+            <summary>
+            Represents Positive Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code) 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.PositiveInfinity">
+            <summary>
+            Represents Positive Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code)
+            </summary>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.NegativeInfinityValue">
+            <summary>
+            Represents Negative Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code) 
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.NegativeInfinity">
+            <summary>
+            Represents Negative Infinity(Only checked in in most methods if certain Preprocessor is set;Checks not implimented yet in code)
+            </summary>
         </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.ConditionalReturn(System.Boolean,System.Object,System.Object)">
             <summary>
@@ -1318,7 +1340,7 @@
             </summary>
             <param name="self"></param>
         </member>
-        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2.op_Explicit(CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2)~System.String">
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2.op_Implicit(CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2)~System.String">
             <summary>
             
             </summary>
@@ -2930,6 +2952,12 @@
             Writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
             </summary>
             <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
+        </member>
+        <member name="M:Newtonsoft.Json.Bson.BsonWriter.WriteValue(CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2)">
+            <summary>
+            Writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2"/> value to write.</param>
         </member>
         <member name="T:Newtonsoft.Json.ConstructorHandling">
             <summary>
@@ -5936,9 +5964,9 @@
         </member>
         <member name="M:Newtonsoft.Json.JsonTextReader.Close">
             <summary>
-            Changes the reader's state to <see cref="F:Newtonsoft.Json.JsonReader.State.Closed"/>. If <see
-            cref="P:Newtonsoft.Json.JsonReader.CloseInput"/> is set to <c>true</c>, the underlying <see
-            cref="T:System.IO.TextReader"/> is also closed.
+            Changes the reader's state to <see cref="F:Newtonsoft.Json.JsonReader.State.Closed"/>. 
+            If <see cref="P:Newtonsoft.Json.JsonReader.CloseInput"/> is set to <c>true</c>, 
+            the underlying <see cref="T:System.IO.TextReader"/> is also closed.
             </summary>
         </member>
         <member name="M:Newtonsoft.Json.JsonTextReader.HasLineInfo">
@@ -5946,8 +5974,8 @@
             Gets a value indicating whether the class can return line information.
             </summary>
             <returns>
-            <c>true</c> if <see cref="P:Newtonsoft.Json.JsonTextReader.LineNumber"/> and <see
-            cref="P:Newtonsoft.Json.JsonTextReader.LinePosition"/> can be provided; otherwise, <c>false</c>.
+            <c>true</c> if <see cref="P:Newtonsoft.Json.JsonTextReader.LineNumber"/> and 
+            <see cref="P:Newtonsoft.Json.JsonTextReader.LinePosition"/> can be provided; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="P:Newtonsoft.Json.JsonTextReader.LineNumber">
@@ -5955,8 +5983,8 @@
             Gets the current line number.
             </summary>
             <value>
-            The current line number or 0 if no line information is available (for example, <see
-            cref="M:Newtonsoft.Json.JsonTextReader.HasLineInfo"/> returns <c>false</c>).
+            The current line number or 0 if no line information is available (for example, 
+            <see cref="M:Newtonsoft.Json.JsonTextReader.HasLineInfo"/> returns <c>false</c>).
             </value>
         </member>
         <member name="P:Newtonsoft.Json.JsonTextReader.LinePosition">
@@ -5964,8 +5992,8 @@
             Gets the current line position.
             </summary>
             <value>
-            The current line position or 0 if no line information is available (for example, <see
-            cref="M:Newtonsoft.Json.JsonTextReader.HasLineInfo"/> returns <c>false</c>).
+            The current line position or 0 if no line information is available (for example, 
+            <see cref="M:Newtonsoft.Json.JsonTextReader.HasLineInfo"/> returns <c>false</c>).
             </value>
         </member>
         <member name="T:Newtonsoft.Json.JsonTextWriter">
@@ -6912,19 +6940,19 @@
             SmallDec data.
             </summary>
         </member>
-        <member name="F:Newtonsoft.Json.JsonToken.Dynamic">
-            <summary>
-            Other unlisted data type
-            </summary>
-        </member>
-        <member name="F:Newtonsoft.Json.JsonToken.DynamicContainer">
-            <summary>
-            Other unlisted data type
-            </summary>
-        </member>
         <member name="F:Newtonsoft.Json.JsonToken.PercentValV2">
             <summary>
             PercentValV2 data
+            </summary>
+        </member>
+        <member name="F:Newtonsoft.Json.JsonToken.Object">
+            <summary>
+            Unknown Object data
+            </summary>
+        </member>
+        <member name="F:Newtonsoft.Json.JsonToken.ObjectArray">
+            <summary>
+            Unknown Object Array data
             </summary>
         </member>
         <member name="T:Newtonsoft.Json.JsonValidatingReader">
@@ -8164,6 +8192,12 @@
             <param name="value">The value being written.</param>
         </member>
         <member name="M:Newtonsoft.Json.JsonWriter.WriteValue(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
+            <summary>
+            Writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
+        </member>
+        <member name="M:Newtonsoft.Json.JsonWriter.WriteValue(CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2)">
             <summary>
             Writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
             </summary>
@@ -10406,6 +10440,34 @@
             </summary>
             <param name="type">The <see cref="P:Newtonsoft.Json.Linq.JToken.Type"/> of annotations to remove.</param>
         </member>
+        <member name="M:Newtonsoft.Json.Linq.JToken.op_Explicit(Newtonsoft.Json.Linq.JToken)~CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Newtonsoft.Json.Linq.JToken"/> to <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Newtonsoft.Json.Linq.JToken.op_Explicit(Newtonsoft.Json.Linq.JToken)~CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2">
+            <summary>
+            Performs an explicit conversion from <see cref="T:Newtonsoft.Json.Linq.JToken"/> to <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2"/>.
+            </summary>
+            <param name="value">The value.</param>
+            <returns>The result of the conversion.</returns>
+        </member>
+        <member name="M:Newtonsoft.Json.Linq.JToken.op_Explicit(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)~Newtonsoft.Json.Linq.JToken">
+            <summary>
+            Performs an implicit conversion from <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> to <see cref="T:Newtonsoft.Json.Linq.JToken"/>.
+            </summary>
+            <param name="value">The value to create a <see cref="T:Newtonsoft.Json.Linq.JValue"/> from.</param>
+            <returns>The <see cref="T:Newtonsoft.Json.Linq.JValue"/> initialized with the specified value.</returns>
+        </member>
+        <member name="M:Newtonsoft.Json.Linq.JToken.op_Explicit(CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2)~Newtonsoft.Json.Linq.JToken">
+            <summary>
+            Performs an explicit conversion from <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2"/> to <see cref="T:Newtonsoft.Json.Linq.JToken"/>.
+            </summary>
+            <param name="value">The value to create a <see cref="T:Newtonsoft.Json.Linq.JValue"/> from.</param>
+            <returns>The <see cref="T:Newtonsoft.Json.Linq.JValue"/> initialized with the specified value.</returns>
+        </member>
         <member name="T:Newtonsoft.Json.Linq.JTokenEqualityComparer">
             <summary>
             Compares tokens to determine whether they are equal.
@@ -10558,19 +10620,9 @@
             SmallDec decimal value
             </summary>
         </member>
-        <member name="F:Newtonsoft.Json.Linq.JTokenType.Dynamic">
-            <summary>
-            
-            </summary>
-        </member>
-        <member name="F:Newtonsoft.Json.Linq.JTokenType.DynamicContainer">
-            <summary>
-            
-            </summary>
-        </member>
         <member name="F:Newtonsoft.Json.Linq.JTokenType.PercentValV2">
             <summary>
-            Weight range based value with 100% persistency of accuracy
+            Weight range based value with 100% persistence of accuracy
             </summary>
         </member>
         <member name="T:Newtonsoft.Json.Linq.JTokenWriter">
@@ -10890,6 +10942,12 @@
             <param name="value">The value.</param>
         </member>
         <member name="M:Newtonsoft.Json.Linq.JValue.#ctor(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Newtonsoft.Json.Linq.JValue"/> class with the given value.
+            </summary>
+            <param name="value">The value.</param>
+        </member>
+        <member name="M:Newtonsoft.Json.Linq.JValue.#ctor(CSharpGlobalCode.GlobalCode_ExperimentalCode.PercentValV2)">
             <summary>
             Initializes a new instance of the <see cref="T:Newtonsoft.Json.Linq.JValue"/> class with the given value.
             </summary>
@@ -11783,6 +11841,16 @@
             </summary>
         </member>
         <member name="F:Newtonsoft.Json.Schema.JsonSchemaType.Null">
+            <summary>
+            Null type.
+            </summary>
+        </member>
+        <member name="F:Newtonsoft.Json.Schema.JsonSchemaType.SmallDec">
+            <summary>
+            SmallDec type.
+            </summary>
+        </member>
+        <member name="F:Newtonsoft.Json.Schema.JsonSchemaType.PercentValV2">
             <summary>
             Null type.
             </summary>
@@ -13495,36 +13563,6 @@
         <member name="F:Newtonsoft.Json.WriteState.Start">
             <summary>
             A <see cref="T:Newtonsoft.Json.JsonWriter"/> write method has not been called.
-            </summary>
-        </member>
-        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
-            <summary>
-            GeneratedInternalTypeHelper
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
-            <summary>
-            CreateInstance
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            GetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
-            <summary>
-            SetPropertyValue
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
-            <summary>
-            CreateDelegate
-            </summary>
-        </member>
-        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
-            <summary>
-            AddEventHandler
             </summary>
         </member>
     </members>
