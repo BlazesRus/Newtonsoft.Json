@@ -30,6 +30,9 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Text;
 using System.Globalization;
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
 
 namespace Newtonsoft.Json.Utilities
 {
@@ -60,6 +63,18 @@ namespace Newtonsoft.Json.Utilities
                 {
                     return MathUtils.ApproxEquals(Convert.ToDouble(objA, CultureInfo.CurrentCulture), Convert.ToDouble(objB, CultureInfo.CurrentCulture));
                 }
+#if (JSON_SmallDecSupport)
+                else if (objA is SmallDec || objB is SmallDec)
+                {
+                    string FullNameA = objA.GetType().FullName;
+                    string FullNameB = objA.GetType().FullName;
+                    SmallDec i1 = objA is SmallDec ? (SmallDec)objA :
+                    (FullNameA == "MS.Internal.NamedObject" ? SmallDec.Zero : SmallDec.Initialize(objA));
+                    SmallDec i2 = objB is SmallDec ? (SmallDec)objB :
+                    (FullNameB == "MS.Internal.NamedObject" ? SmallDec.Zero : SmallDec.Initialize(objB));
+                    return i1 == i2;
+                }
+#endif
                 else
                 {
                     return false;
@@ -82,7 +97,12 @@ namespace Newtonsoft.Json.Utilities
             {
                 return "{null}";
             }
-
+#if (JSON_SmallDecSupport)
+            else if (value.GetType() == typeof(SmallDec))
+            {
+                return value.ToString();
+            }
+#endif
             return (value is string) ? @"""" + value.ToString() + @"""" : value.ToString();
         }
 

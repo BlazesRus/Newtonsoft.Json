@@ -2305,10 +2305,12 @@ namespace Newtonsoft.Json.Converters
         /// </returns>
         public override bool CanConvert(Type valueType)
         {
-            if(valueType.ToString()=="SmallDec")
+#if (JSON_SmallDecSupport)
+            if (valueType.FullName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")
             {
                 return true;
             }
+#endif
 #if HAVE_XLINQ
             if (valueType.AssignableToTypeName("System.Xml.Linq.XObject", false))
             {

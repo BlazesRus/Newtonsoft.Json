@@ -33,13 +33,17 @@ using System.Numerics;
 #endif
 using System.Threading.Tasks;
 using Newtonsoft.Json.Utilities;
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+#endif
+
 
 namespace Newtonsoft.Json
 {
     public partial class JsonTextWriter
     {
         // It's not safe to perform the async methods here in a derived class as if the synchronous equivalent
-        // has been overriden then the asychronous method will no longer be doing the same operation.
+        // has been overridden then the asynchronous method will no longer be doing the same operation.
 #if HAVE_ASYNC // Double-check this isn't included inappropriately.
         private readonly bool _safeAsync;
 #endif
@@ -1352,6 +1356,34 @@ namespace Newtonsoft.Json
             _writeBuffer = newBuffer;
             return newBuffer;
         }
+
+#if (JSON_SmallDecSupport)
+        /// <summary>
+        /// Asynchronously writes a <see cref="SmallDec"/> value.
+        /// </summary>
+        /// <param name="value">The <see cref="SmallDec"/> value to write.</param>
+        /// <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="CancellationToken.None"/>.</param>
+        /// <returns>A <see cref="Task"/> that represents the asynchronous operation.</returns>
+        /// <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+        /// execute synchronously, returning an already-completed task.</remarks>
+        [CLSCompliant(false)]
+        public override Task WriteValueAsync(SmallDec value, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            return _safeAsync ? WriteSmallDecAsync(value, cancellationToken) : base.WriteValueAsync(value, cancellationToken);
+        }
+
+        private Task WriteSmallDecAsync(SmallDec value, CancellationToken cancellationToken)
+        {
+            Task task = InternalWriteValueAsync(JsonToken.SmallDec, cancellationToken);
+            if (task.Status == TaskStatus.RanToCompletion)
+            {
+                return WriteEscapedStringAsync(value.ToString(), true, cancellationToken);
+            }
+
+            return DoWriteValueAsync(task, value.ToString(), cancellationToken);
+            //return _writer.WriteAsync(uvalue.ToString(), cancellationToken);
+        }
+#endif
     }
 }
 

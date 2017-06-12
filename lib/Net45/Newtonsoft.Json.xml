@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>CustomNewtonsoftx64.Json</name>
+        <name>CustomNewtonsoft.Json</name>
     </assembly>
     <members>
         <member name="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec">

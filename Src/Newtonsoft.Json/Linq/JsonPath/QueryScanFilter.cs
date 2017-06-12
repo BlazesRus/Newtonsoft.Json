@@ -11,8 +11,10 @@ namespace Newtonsoft.Json.Linq.JsonPath
         {
             foreach (JToken t in current)
             {
-                if (t is JContainer c)
+
+                if (t is JContainer)
                 {
+                    JContainer c = t as JContainer;
                     foreach (JToken d in c.DescendantsAndSelf())
                     {
                         if (Expression.IsMatch(root, d))

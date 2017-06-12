@@ -490,6 +490,36 @@ namespace Newtonsoft.Json.Linq
                         return true;
                 }
             }
+#if (JSON_SmallDecSupport)
+            else if (objA is SmallDec || objB is SmallDec)
+            {
+                string FullNameA = objA.GetType().FullName;
+                string FullNameB = objA.GetType().FullName;
+                SmallDec i1 = objA is SmallDec?(SmallDec)objA : 
+                (FullNameA == "MS.Internal.NamedObject"?SmallDec.Zero:SmallDec.Initialize(objA));
+                SmallDec i2 = objB is SmallDec ? (SmallDec)objB :
+                (FullNameB == "MS.Internal.NamedObject" ? SmallDec.Zero : SmallDec.Initialize(objB));
+                switch (operation)
+                {
+                    case ExpressionType.Add:
+                    case ExpressionType.AddAssign:
+                        result = i1 + i2;
+                        return true;
+                    case ExpressionType.Subtract:
+                    case ExpressionType.SubtractAssign:
+                        result = i1 - i2;
+                        return true;
+                    case ExpressionType.Multiply:
+                    case ExpressionType.MultiplyAssign:
+                        result = i1 * i2;
+                        return true;
+                    case ExpressionType.Divide:
+                    case ExpressionType.DivideAssign:
+                        result = i1 / i2;
+                        return true;
+                }
+            }
+#endif
             else
 #endif
                 if (objA is ulong || objB is ulong || objA is decimal || objB is decimal)
@@ -866,9 +896,6 @@ namespace Newtonsoft.Json.Linq
                 case JTokenType.SmallDec:
                     writer.WriteValue((SmallDec)_value);
                     return;
-                //case JTokenType.Dynamic:
-                //    writer.WriteValue((dynamic)_value);
-                //    return;
             }
 
             throw MiscellaneousUtils.CreateArgumentOutOfRangeException(nameof(Type), _valueType, "Unexpected token type.");

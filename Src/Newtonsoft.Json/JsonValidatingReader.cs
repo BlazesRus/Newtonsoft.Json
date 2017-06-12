@@ -38,7 +38,9 @@ using System.IO;
 using Newtonsoft.Json.Utilities.LinqBridge;
 #else
 using System.Linq;
-
+#endif
+#if (JSON_SmallDecSupport)
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
 #endif
 
 namespace Newtonsoft.Json
@@ -662,7 +664,9 @@ namespace Newtonsoft.Json
         }
 
 #if (JSON_SmallDecSupport)
+#pragma warning disable CC0091 // Use static method
         private void ValidatePercentValV2(JsonSchemaModel schema)
+#pragma warning restore CC0091 // Use static method
         {
             throw new NotImplementedException();
         }
@@ -681,7 +685,7 @@ namespace Newtonsoft.Json
 
             ValidateNotDisallowed(schema);
 
-            object value = _reader.Value;
+            SmallDec value = (SmallDec)_reader.Value;
 
             if (schema.Maximum != null)
             {
