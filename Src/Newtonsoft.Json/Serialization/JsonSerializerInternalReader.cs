@@ -148,7 +148,7 @@ namespace Newtonsoft.Json.Serialization
             {
                 JsonConverter converter = GetConverter(contract, null, null, null);
 
-                if (reader.TokenType == JsonToken.None && !ReadForType(reader, contract, converter != null))
+                if (reader.TokenType == JsonToken.None && !reader.ReadForType(contract, converter != null))
                 {
                     if (contract != null && !contract.IsNullable)
                     {
@@ -830,65 +830,48 @@ namespace Newtonsoft.Json.Serialization
             }
         }
 
-        public class CheckedArrayContractConversion
+        private JsonArrayContract EnsureArrayContract(JsonReader reader, Type objectType, JsonContract contract)
         {
-            //1 = Success Array Contract Conversion from JsonContract
-            //3/0 = No Contract
-            //2 = Created contract based on object type(Failed JsonContract as method)
-            public byte SuccessfulConversion = 0;
-            public JsonArrayContract arrayContract = null;
-            public CheckedArrayContractConversion(JsonReader reader, Type objectType, JsonContract contract)
+            try
             {
+                if (contract == null)
+                {
+                    throw JsonSerializationException.Create(reader, "Could not resolve type '{0}' to a JsonContract.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                }
+    
+                JsonArrayContract arrayContract = contract as JsonArrayContract;
+                if (arrayContract == null)
+                {
+                    string message = @"Cannot deserialize the current JSON array (e.g. [1,2,3]) into type '{0}' because the type requires a {1} to deserialize correctly." + Environment.NewLine +
+                                     @"To fix this error either change the JSON to a {1} or change the deserialized type to an array or a type that implements a collection interface (e.g. ICollection, IList) like List<T> that can be deserialized from a JSON array. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array." + Environment.NewLine;
+                    message = message.FormatWith(CultureInfo.InvariantCulture, objectType, GetExpectedDescription(contract));
+    
+                    throw JsonSerializationException.Create(reader, message);
+
+                }
+                else
+                {
+                    return arrayContract;
+                }
+            }
+            catch
+            { 
                 try
                 {
-                    if (contract == null)
+                    if(objectType!=null)
                     {
-                        SuccessfulConversion = 3;
-                        throw JsonSerializationException.Create(reader, "Could not resolve type '{0}' to a JsonContract.".FormatWith(CultureInfo.InvariantCulture, objectType));
-                    }
-                    arrayContract = contract as JsonArrayContract;
-                    if (arrayContract != null)
-                    {
-                        SuccessfulConversion = 1;
-                    }
-                    else
-                    {
-                        SuccessfulConversion = 2;
-                        arrayContract = new JsonArrayContract(objectType);
+                        JsonArrayContract arrayContract = new JsonArrayContract(objectType);
+                        return arrayContract;
                     }
                 }
                 catch
-                { 
-                    if(arrayContract==null)
-                    {
-                        arrayContract = new JsonArrayContract(objectType);
-                    }
+                {
+                    throw JsonSerializationException.Create(reader, "Failed forcing arrayContract");
                 }
+                if(objectType==null){throw JsonSerializationException.Create(reader, "Failed forcing arrayContract from lack of objectType");}
             }
-        }
-
-        private JsonArrayContract EnsureArrayContract(JsonReader reader, Type objectType, JsonContract contract)
-        {
-            if (contract == null)
-            {
-                throw JsonSerializationException.Create(reader, "Could not resolve type '{0}' to a JsonContract.".FormatWith(CultureInfo.InvariantCulture, objectType));
-            }
-
-            JsonArrayContract arrayContract = contract as JsonArrayContract;
-            if (arrayContract == null)
-            {
-
-                    arrayContract = new JsonArrayContract(contract.UnderlyingType); ;
-
-                    string message = @"Cannot deserialize the current JSON array (e.g. [1,2,3]) into type '{0}' because the type requires a {1} to deserialize correctly." + Environment.NewLine +
-                    @"To fix this error either change the JSON to a {1} or change the deserialized type to an array or a type that implements a collection interface (e.g. ICollection, IList) like List<T> that can be deserialized from a JSON array. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array." + Environment.NewLine;
-                    message = message.FormatWith(CultureInfo.InvariantCulture, objectType, GetExpectedDescription(contract));
-
-                    throw JsonSerializationException.Create(reader, message);
-
-            }
-
-            return arrayContract;
+            //Fail-safe conversion of Contract
+            return new JsonArrayContract(contract.UnderlyingType);
         }
 
         private object CreateList(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, object existingValue, string id)
@@ -900,14 +883,13 @@ namespace Newtonsoft.Json.Serialization
                 return CreateJToken(reader, contract);
             }
 
-            //JsonArrayContract arrayContract = EnsureArrayContract(reader, objectType, contract);
-            CheckedArrayContractConversion ContractCheck = new CheckedArrayContractConversion(reader, objectType, contract);
+            JsonArrayContract arrayContract = EnsureArrayContract(reader, objectType, contract);
 
             if (existingValue == null)
             {
                 bool createdFromNonDefaultCreator;
                 
-                IList list = CreateNewList(reader, ContractCheck.arrayContract, out createdFromNonDefaultCreator);
+                IList list = CreateNewList(reader, arrayContract, out createdFromNonDefaultCreator);
 
                 if (createdFromNonDefaultCreator)
                 {
@@ -926,36 +908,36 @@ namespace Newtonsoft.Json.Serialization
                         throw JsonSerializationException.Create(reader, "Cannot call OnError on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
                     }
 
-                    if (!ContractCheck.arrayContract.HasParameterizedCreatorInternal && !ContractCheck.arrayContract.IsArray)
+                    if (!arrayContract.HasParameterizedCreatorInternal && !arrayContract.IsArray)
                     {
                         throw JsonSerializationException.Create(reader, "Cannot deserialize readonly or fixed size list: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
                     }
                 }
 
-                if (!ContractCheck.arrayContract.IsMultidimensionalArray)
+                if (!arrayContract.IsMultidimensionalArray)
                 {
-                    PopulateList(list, reader, ContractCheck.arrayContract, member, id);
+                    PopulateList(list, reader, arrayContract, member, id);
                 }
                 else
                 {
-                    PopulateMultidimensionalArray(list, reader, ContractCheck.arrayContract, member, id);
+                    PopulateMultidimensionalArray(list, reader, arrayContract, member, id);
                 }
 
                 if (createdFromNonDefaultCreator)
                 {
-                    if (ContractCheck.arrayContract.IsMultidimensionalArray)
+                    if (arrayContract.IsMultidimensionalArray)
                     {
-                        list = CollectionUtils.ToMultidimensionalArray(list, ContractCheck.arrayContract.CollectionItemType, contract.CreatedType.GetArrayRank());
+                        list = CollectionUtils.ToMultidimensionalArray(list, arrayContract.CollectionItemType, contract.CreatedType.GetArrayRank());
                     }
-                    else if (ContractCheck.arrayContract.IsArray)
+                    else if (arrayContract.IsArray)
                     {
-                        Array a = Array.CreateInstance(ContractCheck.arrayContract.CollectionItemType, list.Count);
+                        Array a = Array.CreateInstance(arrayContract.CollectionItemType, list.Count);
                         list.CopyTo(a, 0);
                         list = a;
                     }
                     else
                     {
-                        ObjectConstructor<object> creator = ContractCheck.arrayContract.OverrideCreator ?? ContractCheck.arrayContract.ParameterizedCreator;
+                        ObjectConstructor<object> creator = arrayContract.OverrideCreator ?? arrayContract.ParameterizedCreator;
 
                         return creator(list);
                     }
@@ -969,19 +951,13 @@ namespace Newtonsoft.Json.Serialization
             }
             else
             {
-                if (!ContractCheck.arrayContract.CanDeserialize)
+                if (!arrayContract.CanDeserialize)
                 {
                     throw JsonSerializationException.Create(reader, "Cannot populate list type {0}.".FormatWith(CultureInfo.InvariantCulture, contract.CreatedType));
                 }
 
-                value = PopulateList((ContractCheck.arrayContract.ShouldCreateWrapper) ? ContractCheck.arrayContract.CreateWrapper(existingValue) : (IList)existingValue, reader, ContractCheck.arrayContract, member, id);
+                value = PopulateList((arrayContract.ShouldCreateWrapper) ? arrayContract.CreateWrapper(existingValue) : (IList)existingValue, reader, arrayContract, member, id);
             }
-#if (DEBUG)
-            //if(ContractCheck.SuccessfulConversion!=1)
-            //{
-            //    Console.WriteLine("Forcefully Serialized List from " + objectType.FullName +" with underlying type of"+ objectType.UnderlyingSystemType.ToString());
-            //}
-#endif
             return value;
         }
 
@@ -1049,61 +1025,6 @@ namespace Newtonsoft.Json.Serialization
             }
 
             return value;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="reader"></param>
-        /// <param name="value"></param>
-        /// <param name="culture"></param>
-        /// <param name="contract"></param>
-        /// <param name="targetType"></param>
-        /// <param name="TokenType"></param>
-        /// <returns></returns>
-        private static object EnsureGlobalCodeType(JsonReader reader, object value, CultureInfo culture, JsonContract contract, Type targetType, JsonToken TokenType = JsonToken.SmallDec)
-        {
-            if (targetType == null)
-            {
-                return value;
-            }
-            Type valueType = ReflectionUtils.GetObjectType(value);
-            string TargetTypeName = targetType.ToString();
-            string ValueTypeName = valueType.ToString();
-            try
-            {
-                if (valueType == targetType)
-                {
-                    return value;
-                }
-                else
-                {
-                    switch (TokenType)
-                    {
-                        case JsonToken.SmallDec:
-                        {
-                                if (ValueTypeName == "SmallDec")
-                                {
-                                    return (SmallDec)value;
-                                }
-                                else
-                                {
-                                    dynamic changedObj = Convert.ChangeType(value, targetType, culture);
-                                    return changedObj;
-                                }
-                        }
-                        default:
-                        {
-                                return ConvertUtils.ConvertOrCast(value, culture, contract.NonNullableUnderlyingType);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Console.WriteLine("Exception called from EnsureGlobalCodeType of type " + ex.ToString() + " with TokenType " + TokenType.ToString() + " with conversion from " + ValueTypeName+" to "+TargetTypeName);
-                throw JsonSerializationException.Create(reader, "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.FormatValueForPrint(value), targetType), ex);
-            }
         }
 
         private bool SetPropertyValue(JsonProperty property, JsonConverter propertyConverter, JsonContainerContract containerContract, JsonProperty containerProperty, JsonReader reader, object target)
@@ -2740,5 +2661,95 @@ namespace Newtonsoft.Json.Serialization
                 }
             }
         }
+
+#if (JSON_SmallDecSupport)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="value"></param>
+        /// <param name="culture"></param>
+        /// <param name="contract"></param>
+        /// <param name="targetType"></param>
+        /// <param name="TokenType"></param>
+        /// <returns></returns>
+        private static object EnsureGlobalCodeType(JsonReader reader, object value, CultureInfo culture, JsonContract contract, Type targetType, JsonToken TokenType=JsonToken.None)
+        {
+            try
+            {
+                switch (TokenType)//Target Token type
+                {
+                    case JsonToken.SmallDec:
+                    {
+                        return SmallDec.Initialize(System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture));
+                        //if (ValueTypeName == "CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec")
+                        //{
+                        //    return (SmallDec)(value ?? SmallDec.Zero);
+                        //}
+                        //else
+                        //{
+                        //    dynamic changedObj = Convert.ChangeType(value, targetType, culture);
+                        //    return changedObj;
+                        //}
+                    }
+                }
+                if (targetType == null)
+                {
+                    return value;
+                }
+                Type valueType = ReflectionUtils.GetObjectType(value);
+                string TargetTypeName = targetType.FullName;
+                string ValueTypeName = valueType.FullName;
+                if (valueType == targetType)
+                {
+                    if (value is SmallDec)
+                    {
+                        return (SmallDec)value;
+                    }
+                    return value;
+                }
+                else
+                {
+                    if (targetType==typeof(SmallDec))
+                    {
+                        return SmallDec.Initialize(System.Convert.ChangeType(value, value.GetType(), CultureInfo.InvariantCulture));
+                    }
+                    else if (value == null && contract.IsNullable)
+                    {
+                        return null;
+                    }
+                    if (contract.IsConvertable)
+                    {
+                        JsonPrimitiveContract primitiveContract = (JsonPrimitiveContract)contract;
+
+                        if (contract.IsEnum)
+                        {
+                            if (value is string)
+                            {
+                                return Enum.Parse(contract.NonNullableUnderlyingType, value.ToString(), true);
+                            }
+                            else if (ConvertUtils.IsInteger(primitiveContract.TypeCode))
+                            {
+                                return Enum.ToObject(contract.NonNullableUnderlyingType, value);
+                            }
+                            //else
+                            //{
+                            //    Type EnumType = Enum.GetUnderlyingType(contract.UnderlyingType);
+
+                            //}
+                        }
+
+                        return Convert.ChangeType(value, contract.NonNullableUnderlyingType, culture);
+                    }
+                    return ConvertUtils.ConvertOrCast(value, culture, contract.NonNullableUnderlyingType);
+                }
+            }
+            catch (Exception ex)
+            {
+                ///System.Console.WriteLine("Exception called from EnsureGlobalCodeType of type " + ex.ToString() + " with TokenType " + TokenType.ToString() + " with conversion from " + ValueTypeName + " to " + TargetTypeName);
+                throw JsonSerializationException.Create(reader, "Error converting value {0} to type '{1}'.".FormatWith(CultureInfo.InvariantCulture, MiscellaneousUtils.FormatValueForPrint(value), targetType), ex);
+            }
+        }
+#endif
     }
 }
