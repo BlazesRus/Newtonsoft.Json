@@ -1,0 +1,3 @@
+https://github.com/BlazesRus/BlazesCSharpGlobalCode
+
+-Both CustomNewtonsoft.Json and BlazesCSharpGlobalCode need to be installed inside same directory(packages etc)

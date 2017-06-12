@@ -6580,6 +6580,16 @@
             <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
             execute synchronously, returning an already-completed task.</remarks>
         </member>
+        <member name="M:Newtonsoft.Json.JsonTextWriter.WriteValueAsync(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+            <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+            execute synchronously, returning an already-completed task.</remarks>
+        </member>
         <member name="P:Newtonsoft.Json.JsonTextWriter.ArrayPool">
             <summary>
             Gets or sets the writer's character array pool.
@@ -7728,6 +7738,16 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
             <remarks>The default behavior is to execute synchronously, returning an already-completed task. Derived
             classes can override this behavior for true asychronousity.</remarks>
+        </member>
+        <member name="M:Newtonsoft.Json.JsonWriter.WriteValueAsync(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+            <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
+            classes can override this behaviour for true asychronousity.</remarks>
         </member>
         <member name="P:Newtonsoft.Json.JsonWriter.CloseOutput">
             <summary>

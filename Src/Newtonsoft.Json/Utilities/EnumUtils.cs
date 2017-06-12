@@ -221,7 +221,15 @@ namespace Newtonsoft.Json.Utilities
 
                 if (disallowValue)
                 {
-                    bool isNumber = int.TryParse(finalEnumText, NumberStyles.AllowLeadingSign, CultureInfo.InvariantCulture, out int _);
+                    bool isNumber = true;
+                    for (int i = 0; i < finalEnumText.Length; i++)
+                    {
+                        if (!char.IsNumber(finalEnumText[i]))
+                        {
+                            isNumber = false;
+                            break;
+                        }
+                    }
 
                     if (isNumber)
                     {
