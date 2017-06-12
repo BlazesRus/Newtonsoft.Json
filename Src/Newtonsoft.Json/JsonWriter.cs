@@ -677,7 +677,7 @@ namespace Newtonsoft.Json
             }
         }
 
-        private int CalculateWriteTokenInitialDepth(JsonReader reader)
+        private static int CalculateWriteTokenInitialDepth(JsonReader reader)
         {
             JsonToken type = reader.TokenType;
             if (type == JsonToken.None)
@@ -688,7 +688,7 @@ namespace Newtonsoft.Json
             return JsonTokenUtils.IsStartToken(type) ? reader.Depth : reader.Depth + 1;
         }
 
-        private int CalculateWriteTokenFinalDepth(JsonReader reader)
+        private static int CalculateWriteTokenFinalDepth(JsonReader reader)
         {
             JsonToken type = reader.TokenType;
             if (type == JsonToken.None)

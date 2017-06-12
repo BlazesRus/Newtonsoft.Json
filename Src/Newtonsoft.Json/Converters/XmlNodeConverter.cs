@@ -2108,7 +2108,7 @@ namespace Newtonsoft.Json.Converters
             return attributeNameValues;
         }
 
-        private void CreateInstruction(JsonReader reader, IXmlDocument document, IXmlNode currentNode, string propertyName)
+        private static void CreateInstruction(JsonReader reader, IXmlDocument document, IXmlNode currentNode, string propertyName)
         {
             if (propertyName == DeclarationName)
             {
@@ -2147,7 +2147,7 @@ namespace Newtonsoft.Json.Converters
         }
 
 #if HAVE_XML_DOCUMENT_TYPE
-        private void CreateDocumentType(JsonReader reader, IXmlDocument document, IXmlNode currentNode)
+        private static void CreateDocumentType(JsonReader reader, IXmlDocument document, IXmlNode currentNode)
         {
             string name = null;
             string publicId = null;
