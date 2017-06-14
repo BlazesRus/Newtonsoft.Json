@@ -157,7 +157,8 @@ namespace Newtonsoft.Json.Serialization
 
                     return null;
                 }
-
+//#if (JSON_SmallDecSupport)
+//#endif
                 object deserializedValue;
 
                 if (converter != null && converter.CanRead)
@@ -830,48 +831,71 @@ namespace Newtonsoft.Json.Serialization
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="objectType"></param>
+        /// <param name="contract"></param>
+        /// <returns></returns>
+        private static JsonArrayContract ForceArrayContract(JsonReader reader, Type objectType, JsonContract contract)
+        {
+            JsonArrayContract arrayContract = new JsonArrayContract(objectType);
+            return arrayContract;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="objectType"></param>
+        /// <param name="contract"></param>
+        /// <returns></returns>
         private JsonArrayContract EnsureArrayContract(JsonReader reader, Type objectType, JsonContract contract)
         {
-            try
+            if (contract == null)
             {
-                if (contract == null)
+                if (objectType == null)
                 {
                     throw JsonSerializationException.Create(reader, "Could not resolve type '{0}' to a JsonContract.".FormatWith(CultureInfo.InvariantCulture, objectType));
                 }
-    
-                JsonArrayContract arrayContract = contract as JsonArrayContract;
-                if (arrayContract == null)
+                else
                 {
-                    string message = @"Cannot deserialize the current JSON array (e.g. [1,2,3]) into type '{0}' because the type requires a {1} to deserialize correctly." + Environment.NewLine +
-                                     @"To fix this error either change the JSON to a {1} or change the deserialized type to an array or a type that implements a collection interface (e.g. ICollection, IList) like List<T> that can be deserialized from a JSON array. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array." + Environment.NewLine;
-                    message = message.FormatWith(CultureInfo.InvariantCulture, objectType, GetExpectedDescription(contract));
+                    return new JsonArrayContract(objectType);
+                }
+            }
     
-                    throw JsonSerializationException.Create(reader, message);
+            JsonArrayContract arrayContract = contract as JsonArrayContract;
+            if (arrayContract == null)
+            {
+                if (objectType == null)
+                {
+                    try
+                    {
+                        //Fail-safe conversion of Contract
+                        return new JsonArrayContract(contract.UnderlyingType);
+                    }
+                    catch (System.Exception ex)
+                    {
+                        //string message = @"Cannot deserialize the current JSON array (e.g. [1,2,3]) into type '{0}' because the type requires a {1} to deserialize correctly." + Environment.NewLine +
+                        //@"To fix this error either change the JSON to a {1} or change the deserialized type to an array or a type that implements a collection interface (e.g. ICollection, IList) like List<T> that can be deserialized from a JSON array. JsonArrayAttribute can also be added to the type to force it to deserialize from a JSON array." + Environment.NewLine;
+                        string message = "Exception of "+ex.ToString()+" occurred. Cannot deserialize the current JSON array (" + reader.Value.ToString() + ") into type '{0}' because the type requires a {1} to deserialize correctly.";
+                        message = message.FormatWith(CultureInfo.InvariantCulture, objectType, GetExpectedDescription(contract));
+
+                        throw JsonSerializationException.Create(reader, message);
+                    }
 
                 }
                 else
                 {
-                    return arrayContract;
+                    return new JsonArrayContract(objectType);
                 }
             }
-            catch
-            { 
-                try
-                {
-                    if(objectType!=null)
-                    {
-                        JsonArrayContract arrayContract = new JsonArrayContract(objectType);
-                        return arrayContract;
-                    }
-                }
-                catch
-                {
-                    throw JsonSerializationException.Create(reader, "Failed forcing arrayContract");
-                }
-                if(objectType==null){throw JsonSerializationException.Create(reader, "Failed forcing arrayContract from lack of objectType");}
+            else
+            {
+                return arrayContract;
             }
-            //Fail-safe conversion of Contract
-            return new JsonArrayContract(contract.UnderlyingType);
+
         }
 
         private object CreateList(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, object existingValue, string id)
@@ -1421,7 +1445,7 @@ namespace Newtonsoft.Json.Serialization
                                 throw JsonSerializationException.Create(reader, "Could not convert string '{0}' to dictionary key type '{1}'. Create a TypeConverter to convert from the string to the key type object.".FormatWith(CultureInfo.InvariantCulture, reader.Value, contract.DictionaryKeyType), ex);
                             }
 
-                            if (!ReadForType(reader, contract.ItemContract, dictionaryValueConverter != null))
+                            if (!reader.ReadForType(contract.ItemContract, dictionaryValueConverter != null))
                             {
                                 throw JsonSerializationException.Create(reader, "Unexpected end when deserializing object.");
                             }
@@ -1497,7 +1521,7 @@ namespace Newtonsoft.Json.Serialization
                 {
                     try
                     {
-                        if (ReadForType(reader, collectionItemContract, collectionItemConverter != null))
+                        if (reader.ReadForType(collectionItemContract, collectionItemConverter != null))
                         {
                             switch (reader.TokenType)
                             {
@@ -1652,7 +1676,7 @@ namespace Newtonsoft.Json.Serialization
             {
                 try
                 {
-                    if (ReadForType(reader, contract.ItemContract, collectionItemConverter != null))
+                    if (reader.ReadForType(contract.ItemContract, collectionItemConverter != null))
                     {
                         switch (reader.TokenType)
                         {
@@ -2198,7 +2222,7 @@ namespace Newtonsoft.Json.Serialization
 
                             JsonConverter propertyConverter = GetConverter(property.PropertyContract, property.MemberConverter, contract, containerProperty);
 
-                            if (!ReadForType(reader, property.PropertyContract, propertyConverter != null))
+                            if (!reader.ReadForType(property.PropertyContract, propertyConverter != null))
                             {
                                 throw JsonSerializationException.Create(reader, "Unexpected end when setting {0}'s value.".FormatWith(CultureInfo.InvariantCulture, memberName));
                             }
@@ -2437,7 +2461,7 @@ namespace Newtonsoft.Json.Serialization
 
                                 JsonConverter propertyConverter = GetConverter(property.PropertyContract, property.MemberConverter, contract, member);
 
-                                if (!ReadForType(reader, property.PropertyContract, propertyConverter != null))
+                                if (!reader.ReadForType(property.PropertyContract, propertyConverter != null))
                                 {
                                     throw JsonSerializationException.Create(reader, "Unexpected end when setting {0}'s value.".FormatWith(CultureInfo.InvariantCulture, memberName));
                                 }
@@ -2570,7 +2594,7 @@ namespace Newtonsoft.Json.Serialization
             {
                 try
                 {
-                    Required resolvedRequired = property._required ?? contract.ItemRequired ?? Required.Default;
+                    Required resolvedRequired = property.Ignored ? Required.Default : property._required ?? contract.ItemRequired ?? Required.Default;
 
                     switch (presence)
                     {

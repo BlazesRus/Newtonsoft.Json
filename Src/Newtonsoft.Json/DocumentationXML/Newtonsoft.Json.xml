@@ -122,6 +122,14 @@
             <param name="provider"></param>
             <returns></returns>
         </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Convert(System.Object,System.Type)">
+            <summary>
+            Convert from one Type to another
+            </summary>
+            <param name="InitialValue"></param>
+            <param name="TargetType"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
             <summary>
             
@@ -13183,6 +13191,24 @@
             <param name="comparisonType">Type property name string comparison.</param>
             <returns>A matching property if found.</returns>
         </member>
+        <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.ForceArrayContract(Newtonsoft.Json.JsonReader,System.Type,Newtonsoft.Json.Serialization.JsonContract)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="contract"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureArrayContract(Newtonsoft.Json.JsonReader,System.Type,Newtonsoft.Json.Serialization.JsonContract)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="contract"></param>
+            <returns></returns>
+        </member>
         <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureGlobalCodeType(Newtonsoft.Json.JsonReader,System.Object,System.Globalization.CultureInfo,Newtonsoft.Json.Serialization.JsonContract,System.Type,Newtonsoft.Json.JsonToken)">
             <summary>
             
@@ -13583,6 +13609,36 @@
         <member name="F:Newtonsoft.Json.WriteState.Start">
             <summary>
             A <see cref="T:Newtonsoft.Json.JsonWriter"/> write method has not been called.
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>

@@ -122,6 +122,14 @@
             <param name="provider"></param>
             <returns></returns>
         </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Convert(System.Object,System.Type)">
+            <summary>
+            Convert from one Type to another
+            </summary>
+            <param name="InitialValue"></param>
+            <param name="TargetType"></param>
+            <returns></returns>
+        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec.Pow(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Int32)">
             <summary>
             
@@ -6580,6 +6588,16 @@
             <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
             execute synchronously, returning an already-completed task.</remarks>
         </member>
+        <member name="M:Newtonsoft.Json.JsonTextWriter.WriteValueAsync(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+            <remarks>Derived classes must override this method to get asynchronous behaviour. Otherwise it will
+            execute synchronously, returning an already-completed task.</remarks>
+        </member>
         <member name="P:Newtonsoft.Json.JsonTextWriter.ArrayPool">
             <summary>
             Gets or sets the writer's character array pool.
@@ -7728,6 +7746,16 @@
             <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
             <remarks>The default behavior is to execute synchronously, returning an already-completed task. Derived
             classes can override this behavior for true asychronousity.</remarks>
+        </member>
+        <member name="M:Newtonsoft.Json.JsonWriter.WriteValueAsync(CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec,System.Threading.CancellationToken)">
+            <summary>
+            Asynchronously writes a <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value.
+            </summary>
+            <param name="value">The <see cref="T:CSharpGlobalCode.GlobalCode_ExperimentalCode.SmallDec"/> value to write.</param>
+            <param name="cancellationToken">The token to monitor for cancellation requests. The default value is <see cref="P:System.Threading.CancellationToken.None"/>.</param>
+            <returns>A <see cref="T:System.Threading.Tasks.Task"/> that represents the asynchronous operation.</returns>
+            <remarks>The default behaviour is to execute synchronously, returning an already-completed task. Derived
+            classes can override this behaviour for true asychronousity.</remarks>
         </member>
         <member name="P:Newtonsoft.Json.JsonWriter.CloseOutput">
             <summary>
@@ -13163,6 +13191,24 @@
             <param name="comparisonType">Type property name string comparison.</param>
             <returns>A matching property if found.</returns>
         </member>
+        <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.ForceArrayContract(Newtonsoft.Json.JsonReader,System.Type,Newtonsoft.Json.Serialization.JsonContract)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="contract"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureArrayContract(Newtonsoft.Json.JsonReader,System.Type,Newtonsoft.Json.Serialization.JsonContract)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="contract"></param>
+            <returns></returns>
+        </member>
         <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureGlobalCodeType(Newtonsoft.Json.JsonReader,System.Object,System.Globalization.CultureInfo,Newtonsoft.Json.Serialization.JsonContract,System.Type,Newtonsoft.Json.JsonToken)">
             <summary>
             
@@ -13563,6 +13609,36 @@
         <member name="F:Newtonsoft.Json.WriteState.Start">
             <summary>
             A <see cref="T:Newtonsoft.Json.JsonWriter"/> write method has not been called.
+            </summary>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
             </summary>
         </member>
     </members>
