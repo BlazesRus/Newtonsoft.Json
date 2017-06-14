@@ -46,7 +46,8 @@ using Newtonsoft.Json.Utilities.LinqBridge;
 using System.Linq;
 #endif
 #if (JSON_SmallDecSupport)
-    using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+using CSharpGlobalCode.GlobalCode_ExperimentalCode;
+using CSharpGlobalCode.GlobalCode_VariableConversionFunctions;
 #endif
 
 namespace Newtonsoft.Json.Serialization
@@ -912,8 +913,24 @@ namespace Newtonsoft.Json.Serialization
             if (existingValue == null)
             {
                 bool createdFromNonDefaultCreator;
-                
-                IList list = CreateNewList(reader, arrayContract, out createdFromNonDefaultCreator);
+
+                IList list;
+                try
+                {
+                    list = CreateNewList(reader, arrayContract, out createdFromNonDefaultCreator);
+                }
+                catch (Exception ex)
+                {
+#if (JSON_SmallDecSupport)
+                    TypeDataInfo objectTypeInfo = new TypeDataInfo(arrayContract.UnderlyingType);
+#else
+
+                    Console.WriteLine("JsonSerializerInternalReader->CreateList->CreateNewList Exception occurred during  with objectType " + objectType.ToString());
+                    Console.WriteLine("with exception " + ex.ToString());
+                    Console.WriteLine("with underlying type of " + contract.UnderlyingType.ToString());
+                    throw;
+#endif
+                }
 
                 if (createdFromNonDefaultCreator)
                 {

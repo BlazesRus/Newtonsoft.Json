@@ -63,7 +63,7 @@ namespace Newtonsoft.Json.Serialization
             }
         }
 
-        // the final (i.e. can't be inherited from like a sealed class or valuetype) item contract
+        // the final (i.e. can't be inherited from like a sealed class or value type) item contract
         internal JsonContract FinalItemContract
         {
             get { return _finalItemContract; }
