@@ -2630,6 +2630,24 @@
             InitializeComponent
             </summary>
         </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_VariableConversionFunctions.TypeDataInfo.#ctor(System.Type)">
+            <summary>
+            Separate the TypeName of the Container from the Variable types contained
+            </summary>
+            <param name="TargetType"></param>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_VariableConversionFunctions.TypeDataInfo.ReturnTypeByString(System.String)">
+            <summary>
+            Return of type based on information from string
+            </summary>
+            <param name="TypeName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:CSharpGlobalCode.GlobalCode_VariableConversionFunctions.TypeDataInfo.InitialyzeTypeData">
+            <summary>
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:CSharpGlobalCode.GlobalCode_VariableConversionFunctions.VariableConversionFunctions.ExtractDecimalHalf(System.Double)">
             <summary>
             Attempts to extract value of decimal half as ulong (19 decimals worth extracted)
@@ -4959,7 +4977,7 @@
         <member name="P:Newtonsoft.Json.JsonReader.SupportMultipleContent">
             <summary>
             Gets or sets a value indicating whether multiple pieces of JSON content can
-            be read from a continuous stream without erroring.
+            be read from a continuous stream without errors
             </summary>
             <value>
             <c>true</c> to support reading multiple pieces of JSON content; otherwise <c>false</c>.
@@ -13207,6 +13225,18 @@
             <param name="reader"></param>
             <param name="objectType"></param>
             <param name="contract"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.CreateList(Newtonsoft.Json.JsonReader,System.Type,Newtonsoft.Json.Serialization.JsonContract,Newtonsoft.Json.Serialization.JsonProperty,System.Object,System.String)">
+            <summary>
+            
+            </summary>
+            <param name="reader"></param>
+            <param name="objectType"></param>
+            <param name="contract"></param>
+            <param name="member"></param>
+            <param name="existingValue"></param>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:Newtonsoft.Json.Serialization.JsonSerializerInternalReader.EnsureGlobalCodeType(Newtonsoft.Json.JsonReader,System.Object,System.Globalization.CultureInfo,Newtonsoft.Json.Serialization.JsonContract,System.Type,Newtonsoft.Json.JsonToken)">

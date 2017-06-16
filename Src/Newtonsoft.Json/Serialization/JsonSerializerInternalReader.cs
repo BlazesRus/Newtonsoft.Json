@@ -87,6 +87,11 @@ namespace Newtonsoft.Json.Serialization
 
                     PopulateList((arrayContract.ShouldCreateWrapper) ? arrayContract.CreateWrapper(target) : (IList)target, reader, arrayContract, null, null);
                 }
+                else if (contract.ContractType == JsonContractType.Dictionary)
+                {
+                    JsonDictionaryContract dictionaryContract = (JsonDictionaryContract)contract;
+                    PopulateDictionary((dictionaryContract.ShouldCreateWrapper) ? dictionaryContract.CreateWrapper(target) : (IDictionary)target, reader, dictionaryContract, null, id);
+                }
                 else
                 {
                     throw JsonSerializationException.Create(reader, "Cannot populate JSON array onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture, objectType));
@@ -119,6 +124,37 @@ namespace Newtonsoft.Json.Serialization
                 {
                     throw JsonSerializationException.Create(reader, "Cannot populate JSON object onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture, objectType));
                 }
+            }
+            else if (reader.TokenType == JsonToken.DictionaryStart)
+            {
+#if (DEBUG)
+                Console.WriteLine("Contract Type:" + contract.ContractType);
+#endif
+                ////reader.ReadAndAssert();
+
+                ////string id = null;
+                ////if (Serializer.MetadataPropertyHandling != MetadataPropertyHandling.Ignore
+                ////    && reader.TokenType == JsonToken.PropertyName
+                ////    && string.Equals(reader.Value.ToString(), JsonTypeReflector.IdPropertyName, StringComparison.Ordinal))
+                ////{
+                ////    reader.ReadAndAssert();
+                ////    id = reader.Value?.ToString();
+                ////    reader.ReadAndAssert();
+                ////}
+
+                ////if (contract.ContractType == JsonContractType.Dictionary)
+                ////{
+                JsonDictionaryContract dictionaryContract = (JsonDictionaryContract)contract;
+                PopulateDictionary((dictionaryContract.ShouldCreateWrapper) ? dictionaryContract.CreateWrapper(target) : (IDictionary)target, reader, dictionaryContract, null, id);
+                ////}
+                ////else if (contract.ContractType == JsonContractType.Object)
+                ////{
+                ////    PopulateObject(target, reader, (JsonObjectContract)contract, null, id);
+                ////}
+                ////else
+                ////{
+                ////    throw JsonSerializationException.Create(reader, "Cannot populate JSON object onto type '{0}'.".FormatWith(CultureInfo.InvariantCulture, objectType));
+                ////}
             }
             else
             {
@@ -899,6 +935,16 @@ namespace Newtonsoft.Json.Serialization
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="objectType"></param>
+        /// <param name="contract"></param>
+        /// <param name="member"></param>
+        /// <param name="existingValue"></param>
+        /// <param name="id"></param>
+        /// <returns></returns>
         private object CreateList(JsonReader reader, Type objectType, JsonContract contract, JsonProperty member, object existingValue, string id)
         {
             object value;
@@ -912,83 +958,108 @@ namespace Newtonsoft.Json.Serialization
 
             if (existingValue == null)
             {
-                bool createdFromNonDefaultCreator;
-
-                IList list;
+                //Keep track of how far travels in try block
+                byte ExceptionLevel = 0;
                 try
                 {
-                    list = CreateNewList(reader, arrayContract, out createdFromNonDefaultCreator);
+                    bool createdFromNonDefaultCreator;
+
+                    IList list = CreateNewList(reader, arrayContract, out createdFromNonDefaultCreator);
+                    ExceptionLevel = 1;
+                    if (createdFromNonDefaultCreator)
+                    {
+                        if (id != null)
+                        {
+                            throw JsonSerializationException.Create(reader, "Cannot preserve reference to array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                        }
+
+                        if (contract.OnSerializingCallbacks.Count > 0)
+                        {
+                            throw JsonSerializationException.Create(reader, "Cannot call OnSerializing on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                        }
+
+                        if (contract.OnErrorCallbacks.Count > 0)
+                        {
+                            throw JsonSerializationException.Create(reader, "Cannot call OnError on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                        }
+
+                        if (!arrayContract.HasParameterizedCreatorInternal && !arrayContract.IsArray)
+                        {
+                            throw JsonSerializationException.Create(reader, "Cannot deserialize readonly or fixed size list: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
+                        }
+                    }
+
+                    if (!arrayContract.IsMultidimensionalArray)
+                    {
+                        PopulateList(list, reader, arrayContract, member, id);
+                    }
+                    else
+                    {
+                        PopulateMultidimensionalArray(list, reader, arrayContract, member, id);
+                    }
+
+                    if (createdFromNonDefaultCreator)
+                    {
+                        if (arrayContract.IsMultidimensionalArray)
+                        {
+                            list = CollectionUtils.ToMultidimensionalArray(list, arrayContract.CollectionItemType, contract.CreatedType.GetArrayRank());
+                        }
+                        else if (arrayContract.IsArray)
+                        {
+                            Array a = Array.CreateInstance(arrayContract.CollectionItemType, list.Count);
+                            list.CopyTo(a, 0);
+                            list = a;
+                        }
+                        else
+                        {
+                            ObjectConstructor<object> creator = arrayContract.OverrideCreator ?? arrayContract.ParameterizedCreator;
+
+                            return creator(list);
+                        }
+                    }
+                    else if (list is IWrappedCollection)
+                    {
+                        return ((IWrappedCollection)list).UnderlyingCollection;
+                    }
+
+                    value = list;
+                    return value;
                 }
                 catch (Exception ex)
                 {
 #if (JSON_SmallDecSupport)
-                    TypeDataInfo objectTypeInfo = new TypeDataInfo(arrayContract.UnderlyingType);
-#else
-
-                    Console.WriteLine("JsonSerializerInternalReader->CreateList->CreateNewList Exception occurred during  with objectType " + objectType.ToString());
-                    Console.WriteLine("with exception " + ex.ToString());
-                    Console.WriteLine("with underlying type of " + contract.UnderlyingType.ToString());
-                    throw;
+                    if (ExceptionLevel == 0)
+                    {
+                        TypeDataInfo objectTypeInfo = new TypeDataInfo(arrayContract.UnderlyingType);
+                        if (objectTypeInfo.ContainerTypeName.Contains("Generic.Dictionary"))
+                        {
+                            dynamic container = objectTypeInfo.InitialyzeTypeData();
+                            //Switch the reader object type into StartObject from StartArray to enable to to correctly populate
+                            reader.CurrentState = JsonReader.State.DictionaryStart;
+                            reader.TokenType = JsonToken.DictionaryStart;
+//#if (DEBUG)
+//                            Console.WriteLine("Reader object State:" + reader.CurrentState);
+//#endif
+                            Populate(reader, container);
+#if (DEBUG)
+                            Console.WriteLine("Container size:" + (container as IDictionary).Count);
 #endif
-                }
-
-                if (createdFromNonDefaultCreator)
-                {
-                    if (id != null)
-                    {
-                        throw JsonSerializationException.Create(reader, "Cannot preserve reference to array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
-                    }
-
-                    if (contract.OnSerializingCallbacks.Count > 0)
-                    {
-                        throw JsonSerializationException.Create(reader, "Cannot call OnSerializing on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
-                    }
-
-                    if (contract.OnErrorCallbacks.Count > 0)
-                    {
-                        throw JsonSerializationException.Create(reader, "Cannot call OnError on an array or readonly list, or list created from a non-default constructor: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
-                    }
-
-                    if (!arrayContract.HasParameterizedCreatorInternal && !arrayContract.IsArray)
-                    {
-                        throw JsonSerializationException.Create(reader, "Cannot deserialize readonly or fixed size list: {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
-                    }
-                }
-
-                if (!arrayContract.IsMultidimensionalArray)
-                {
-                    PopulateList(list, reader, arrayContract, member, id);
-                }
-                else
-                {
-                    PopulateMultidimensionalArray(list, reader, arrayContract, member, id);
-                }
-
-                if (createdFromNonDefaultCreator)
-                {
-                    if (arrayContract.IsMultidimensionalArray)
-                    {
-                        list = CollectionUtils.ToMultidimensionalArray(list, arrayContract.CollectionItemType, contract.CreatedType.GetArrayRank());
-                    }
-                    else if (arrayContract.IsArray)
-                    {
-                        Array a = Array.CreateInstance(arrayContract.CollectionItemType, list.Count);
-                        list.CopyTo(a, 0);
-                        list = a;
+                        }
+                        else
+                        {
+                            throw;
+                        }
                     }
                     else
                     {
-                        ObjectConstructor<object> creator = arrayContract.OverrideCreator ?? arrayContract.ParameterizedCreator;
-
-                        return creator(list);
+                        Console.WriteLine("JsonSerializerInternalReader->CreateList->CreateNewList Exception occurred during  with objectType " + objectType.ToString());
+                        Console.WriteLine("with exception " + ex.ToString());
+                        Console.WriteLine("with underlying type of " + contract.UnderlyingType.ToString());
+                        throw;
                     }
+#endif
                 }
-                else if (list is IWrappedCollection)
-                {
-                    return ((IWrappedCollection)list).UnderlyingCollection;
-                }
-
-                value = list;
+                throw JsonSerializationException.Create(reader, "Failed to create list with underlying type {0}.".FormatWith(CultureInfo.InvariantCulture, contract.UnderlyingType));
             }
             else
             {
@@ -998,8 +1069,9 @@ namespace Newtonsoft.Json.Serialization
                 }
 
                 value = PopulateList((arrayContract.ShouldCreateWrapper) ? arrayContract.CreateWrapper(existingValue) : (IList)existingValue, reader, arrayContract, member, id);
+                return value;
             }
-            return value;
+            
         }
 
         private bool HasNoDefinedType(JsonContract contract)
@@ -1451,6 +1523,11 @@ namespace Newtonsoft.Json.Serialization
                                         }
                                         break;
                                     }
+#endif
+#if (JSON_SmallDecSupport)
+                                    case PrimitiveTypeCode.SmallDec:
+                                        keyValue = EnsureGlobalCodeType(reader, keyValue, CultureInfo.InvariantCulture, contract.KeyContract, contract.DictionaryKeyType);
+                                        break;
 #endif
                                     default:
                                         keyValue = EnsureType(reader, keyValue, CultureInfo.InvariantCulture, contract.KeyContract, contract.DictionaryKeyType);

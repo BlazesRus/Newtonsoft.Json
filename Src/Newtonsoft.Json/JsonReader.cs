@@ -116,7 +116,17 @@ namespace Newtonsoft.Json
             /// <summary>
             /// The end of the file has been reached successfully.
             /// </summary>
-            Finished
+            Finished,
+
+            /// <summary>
+            /// Reader is at the start of an Dictionary.
+            /// </summary>
+            DictionaryStart,
+
+            /// <summary>
+            /// Reader is in an Dictionary.
+            /// </summary>
+            Dictionary
         }
 
         // current Token data
@@ -138,9 +148,10 @@ namespace Newtonsoft.Json
         /// Gets the current reader state.
         /// </summary>
         /// <value>The current reader state.</value>
-        protected State CurrentState
+        protected internal State CurrentState
         {
             get { return _currentState; }
+            set { _currentState = value; }
         }
 
         /// <summary>
@@ -153,7 +164,7 @@ namespace Newtonsoft.Json
 
         /// <summary>
         /// Gets or sets a value indicating whether multiple pieces of JSON content can
-        /// be read from a continuous stream without erroring.
+        /// be read from a continuous stream without errors
         /// </summary>
         /// <value>
         /// <c>true</c> to support reading multiple pieces of JSON content; otherwise <c>false</c>.
@@ -259,6 +270,7 @@ namespace Newtonsoft.Json
         public virtual JsonToken TokenType
         {
             get { return _tokenType; }
+            set { _tokenType = value; }
         }
 
         /// <summary>

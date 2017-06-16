@@ -138,6 +138,14 @@ namespace Newtonsoft.Json
         /// <summary>
         /// Unknown Object Array data
         /// </summary>
-        ObjectArray = 21
+        ObjectArray = 21,
+        /// <summary>
+        /// An object start token.
+        /// </summary>
+        DictionaryStart = 22,
+        /// <summary>
+        /// An array end token.
+        /// </summary>
+        DictionaryEnd = 23,
     }
 }
